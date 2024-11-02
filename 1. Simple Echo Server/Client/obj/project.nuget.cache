@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OO+CJVwCBfE=",
+  "dgSpecHash": "vTeXLMALJIs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Sub\\Client.csproj",
+  "projectFilePath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Client\\Client.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Sub\\Client.csproj": {}
+    "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Client\\Client.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Sub\\Client.csproj": {
+    "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Client\\Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Sub\\Client.csproj",
+        "projectUniqueName": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Client\\Client.csproj",
         "projectName": "Client",
-        "projectPath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Sub\\Client.csproj",
+        "projectPath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Client\\Client.csproj",
         "packagesPath": "C:\\Users\\ROKman\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Sub\\obj\\",
+        "outputPath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\1. Simple Echo Server\\Client\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
