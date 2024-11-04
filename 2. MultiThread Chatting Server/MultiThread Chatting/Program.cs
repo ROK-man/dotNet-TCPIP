@@ -10,8 +10,8 @@ namespace MultiThread_Chatting
     internal class Program
     {
         // 모든 클라이언트 소켓을 저장하는 리스트
-        static List<Socket> clientSockets = new List<Socket>();
-        static readonly object lockObject = new object(); // 스레드 동기화용 객체
+        static List<Socket> clientSockets = new();
+        static readonly object lockObject = new(); // 스레드 동기화용 객체
 
         // 메시지를 모든 클라이언트에게 브로드캐스트하는 함수
         static void BroadCast(string message, Socket excludeSocket)
@@ -61,7 +61,9 @@ namespace MultiThread_Chatting
                     // "exit" 메시지 처리
                     if (response.Trim().ToLower() == "exit")
                     {
-                        Console.WriteLine("Client has sent closing message.");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"{handler.RemoteEndPoint} Client has sent closing message.");
+                        Console.ResetColor();
                         break;
                     }
                 }
@@ -79,23 +81,24 @@ namespace MultiThread_Chatting
                 }
                 handler.Shutdown(SocketShutdown.Both);
                 handler.Close();
-                Console.WriteLine("Client disconnected.");
+                PrintYellow($"Client disconnected.");
             }
         }
 
         static void Main(string[] args)
         {
-            IPEndPoint ipEndPoint = new(IPAddress.Loopback, 25000);
-            Socket socket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            // 리스닝 소켓 생성 후 바인딩, 리슨
+            Socket socket = new(SocketType.Stream, ProtocolType.Tcp);
+            socket.Bind(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25000));
+            socket.Listen();
 
-            socket.Bind(ipEndPoint);
-            socket.Listen(10);
-            Console.WriteLine("Listening socket is waiting for a connection...");
+            PrintYellow("Listening socket is waiting for a connection...");
 
+            // 상시적으로 소켓 통신 연결 받아들인 후 리스트에 통신소켓 추가 후 스레드로 넘기기
             while (true)
             {
                 var handler = socket.Accept();
-                Console.WriteLine("Client connected: " + handler.RemoteEndPoint);
+                PrintYellow("Client connected: " + handler.RemoteEndPoint);
 
                 // 클라이언트 소켓을 리스트에 추가
                 lock (lockObject)
@@ -107,6 +110,12 @@ namespace MultiThread_Chatting
                 Thread newConnect = new Thread(new ParameterizedThreadStart(Communication));
                 newConnect.Start(handler);
             }
+        }
+        static void PrintYellow(String s)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(s);
+            Console.ResetColor();
         }
     }
 }
