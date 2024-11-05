@@ -1,0 +1,94 @@
+<Window x:Class="WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="720" Width="1280"
+        WindowStyle="None" AllowsTransparency="True" Background="White">
+
+    <Window.Resources>
+        <!-- 기본 버튼 스타일 -->
+        <Style x:Key="DefaultButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Margin" Value="0,0,1,0" />
+        </Style>
+
+        <!-- 타이틀바 텍스트 스타일 -->
+        <Style x:Key="TitleTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="10,0,0,0" />
+        </Style>
+
+        <!-- 네비게이션 텍스트 스타일 -->
+        <Style x:Key="NavButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="Width" Value="80" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="Gray">
+        <!-- Custom Title Bar -->
+        <DockPanel Background="#333" Height="20" VerticalAlignment="Top" MouseDown="TitleBar_MouseDown">
+            <TextBlock Text="Chatting Application" Style="{StaticResource TitleTextStyle}" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="ㅡ" Style="{StaticResource DefaultButtonStyle}" Width="30" Click="MinimizeButton_Click"/>
+                <Button Content="✕" Style="{StaticResource DefaultButtonStyle}" Width="30" Click="CloseButton_Click"/>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Main Content -->
+        <Grid Margin="0,20,0,0">
+            <!-- Top Controls -->
+            <Grid Height="80" VerticalAlignment="Top" Background="#336">
+                <Button Name="GameStart" Width="150" Height="60" Click="GameStart_Click">
+                    <TextBlock FontSize="30" TextAlignment="Center" VerticalAlignment="Center">게임 시작</TextBlock>
+                </Button>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="400" Height="60">
+                    <Rectangle Width="60" Stroke="Red" Fill="Green"/>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock Name="UserName" Background="NavajoWhite" Width="200" TextAlignment="Center" VerticalAlignment="Center" Padding="10">Name</TextBlock>
+                            <Grid Width="160" Background="AliceBlue">
+                                <Rectangle Fill="Black" Width="10" Height="10" HorizontalAlignment="Left" Margin="3,0,0,0"/>
+                                <TextBlock Margin="15,0,0,0" VerticalAlignment="Center">100</TextBlock>
+                                <Rectangle Fill="Red" Width="10" Height="10" HorizontalAlignment="Left" Margin="80,0,0,0"/>
+                                <TextBlock Margin="95,0,0,0" VerticalAlignment="Center">100</TextBlock>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Height="30" Margin="0,0,40,0">
+                            <Button Content="MyInfo" Style="{StaticResource DefaultButtonStyle}" Width="120"/>
+                            <Button Content="Shop" Style="{StaticResource DefaultButtonStyle}" Width="120"/>
+                            <Button Content="Help" Style="{StaticResource DefaultButtonStyle}" Width="50"/>
+                            <Button Content="Setting" Style="{StaticResource DefaultButtonStyle}" Width="50"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            <!-- Video Area -->
+            <Grid Margin="0,80,0,33">
+                <MediaElement x:Name="MyMediaElement" Source="Video.mp4" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" MediaEnded="MyMediaElement_MediaEnded" />
+            </Grid>
+
+            <!-- Side Panel -->
+            <Border Name="InternalPanel" Background="White" BorderBrush="Black" BorderThickness="2"
+                    Width="240" Height="600" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Visibility="Collapsed" Margin="0,0,0,3">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Name="panelcontent" Text="패널 내용" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Bottom Navigation Bar -->
+            <Grid VerticalAlignment="Bottom" Height="33" Background="Black">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,2,0" Width="240">
+                    <Button x:Name="Friends" Content="Friends" Style="{StaticResource NavButtonStyle}" Click="Friends_Click"/>
+                    <Button x:Name="Group" Content="Groups" Style="{StaticResource NavButtonStyle}" Click="Group_Click"/>
+                    <Button x:Name="Notice" Content="Notice" Style="{StaticResource NavButtonStyle}" Click="Notice_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

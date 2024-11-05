@@ -3,11 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="720" Width="1280"
         WindowStyle="None" AllowsTransparency="True" Background="White">
+    <Window.Resources>
+        <ControlTemplate x:Key="MouseOverButtonTemplate" TargetType="Button">
+            <Border x:Name="border" Background="{TemplateBinding Background}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
 
-    <Grid>
+            <ControlTemplate.Triggers>
+                <!-- 마우스 오버 시 배경색 변경 -->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+
+    </Window.Resources>
+
+
+
+    <Grid Background="Gray">
         <!-- Custom Title Bar -->
         <DockPanel Background="#333" Height="20" VerticalAlignment="Top" MouseDown="TitleBar_MouseDown">
-            <TextBlock Text="Custom Title Bar" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <TextBlock Text="Chatting Application" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0"/>
 
             <!-- Minimize and Close Buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -17,30 +36,98 @@
         </DockPanel>
 
         <!-- Main Content -->
-        <Grid Margin="0,20,0,0">
-            <StackPanel Height="50" VerticalAlignment="Top">
-                <Button Name="GameStart" Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid Margin="0,20,0,0" Grid.ColumnSpan="3">
+            <Grid Height="80" VerticalAlignment="Top" Background="#336">
+
+                <Button Name="GameStart" Width="150" Height="60" VerticalAlignment="Stretch" HorizontalAlignment="Center" Click="GameStart_Click">
                     <TextBlock FontSize="30" TextAlignment="Center" VerticalAlignment="Center">게임 시작</TextBlock>
-                </Button> 
-            </StackPanel>
+                </Button>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="400" Height="60">
+                    <Rectangle Width="60" Stroke="Red" Fill="Green"></Rectangle>
+                    <StackPanel Orientation="Vertical">
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="30">
+                            <TextBlock Name="UserName" Background="NavajoWhite" Width="200" TextAlignment="Center" VerticalAlignment="Center" Padding="10">Name</TextBlock>
+                            <Grid Width="160" Background="AliceBlue">
+                                <Rectangle Fill="Black" Width="10" Height="10" HorizontalAlignment="Left" Margin="3,0,0,0"/>
+                                <TextBlock Margin="15,0,0,0" VerticalAlignment="Center">100</TextBlock>
+                                <Rectangle Fill="Red" Width="10" Height="10" HorizontalAlignment="Left" Margin= "80,0,0,0"/>
+                                <TextBlock Margin="95,00,0,0" VerticalAlignment="Center">100</TextBlock>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="0,0,40,0" Height="30">
+                            <Button BorderThickness="0.3" HorizontalAlignment="Stretch" Width="120">MyInfo</Button>
+                            <Button BorderThickness="0.3" HorizontalAlignment="Stretch" Width="120">Shop</Button>
+                            <Button BorderThickness="0.3" Width="50">Help</Button>
+                            <Button BorderThickness="0.3" HorizontalAlignment="Stretch" Width="50">Setting</Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            <Grid Margin="0,80,0,33">
+                <MediaElement x:Name="MyMediaElement" Source="Video.mp4" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" MediaEnded="MyMediaElement_MediaEnded" />
+            </Grid>
+
 
             <!-- 종속된 내부 패널 -->
-            <Border Name="InternalPanel" Background="White" BorderBrush="Black" BorderThickness="2"
-                    Width="180" Height="500" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                    Visibility="Collapsed" Margin="0,0,0,20">
+
+            <!-- Friends List Panel -->
+            <Border Name="FriendsPanel" Background="White" BorderBrush="Black" BorderThickness="2"
+                Width="242" Height="600" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                Visibility="Collapsed" Margin="0,0,0.5,3">
+                <ListBox x:Name="FriendsList" Background="White" BorderThickness="0"
+                     ItemsSource="{Binding Friendss}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <ListBoxItem MouseDoubleClick="ListBoxItem_MouseDoubleClick">
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock Text="{Binding Name}" FontSize="16" Width="100"/>
+                                    <TextBlock Text="{Binding Status}" FontSize="14" Foreground="Gray"/>
+                                </StackPanel>
+                            </ListBoxItem>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <!-- Group Panel -->
+            <Border Name="GroupPanel" Background="White" BorderBrush="Black" BorderThickness="2"
+                Width="242" Height="600" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                Visibility="Collapsed" Margin="0,0,0.5,3">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock Text="패널 내용" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
-                    <Button Content="닫기" Width="80" Height="30" HorizontalAlignment="Center" Click="ClosePanelButton_Click"/>
+                    <TextBlock Text="그룹 채팅 옵션" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                    <!-- 그룹 채팅 관련 옵션을 여기에 추가 -->
                 </StackPanel>
             </Border>
 
-            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Vertical">
-                <StackPanel Orientation="Horizontal" Width="180" Height="20">
-                    <Button x:Name="Friends" Width="60">A</Button>
-                    <Button x:Name="Group" Width="60">B</Button>
-                    <Button x:Name="Notice" Width="60" Click="TogglePanelButton_Click">C</Button>
+            <!-- Notice Panel -->
+            <Border Name="NoticePanel" Background="White" BorderBrush="Black" BorderThickness="2"
+                Width="242" Height="600" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                Visibility="Collapsed" Margin="0,0,0.5,3">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="알림 관리" FontSize="20" HorizontalAlignment="Center" Margin="10"/>
+                    <!-- 알림 관련 콘텐츠를 여기에 추가 -->
                 </StackPanel>
-            </StackPanel>
+            </Border>
+
+
+            <Grid VerticalAlignment="Bottom" Height="33" Background="Black">
+
+                <StackPanel x:Name="ChatElementsPanel" Orientation="Horizontal" 
+                VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                Margin="2,0,0,0">
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" Width="240" Height="30" Margin="0,0,2,0" HorizontalAlignment="Right">
+                    <Button x:Name="Friends" Width="80" Click="Friends_Click" Margin="0,0,1,0" Tag="DarkGray" Template="{StaticResource MouseOverButtonTemplate}">Friends</Button>
+                    <Button x:Name="Group" Width="80" Click="Group_Click" Margin="0,0,1,0" Tag="DarkGray" Template="{StaticResource MouseOverButtonTemplate}">Groups</Button>
+                    <Button x:Name="Notice" Width="80" Content="Notice" Click="Notice_Click" Margin="0,0,1,0" Tag="DarkGray" Template="{StaticResource MouseOverButtonTemplate}"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
