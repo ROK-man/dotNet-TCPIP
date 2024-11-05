@@ -1,0 +1,15 @@
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\bin\Release\net8.0\MultiThread Chatting.exe
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\bin\Release\net8.0\MultiThread Chatting.deps.json
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\bin\Release\net8.0\MultiThread Chatting.runtimeconfig.json
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\bin\Release\net8.0\MultiThread Chatting.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\bin\Release\net8.0\MultiThread Chatting.pdb
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\MultiThread Chatting.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\MultiThread Chatting.AssemblyInfoInputs.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\MultiThread Chatting.AssemblyInfo.cs
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\MultiThread Chatting.csproj.CoreCompileInputs.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\MultiThread Chatting.sourcelink.json
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\MultiThread Chatting.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\refint\MultiThread Chatting.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\MultiThread Chatting.pdb
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\MultiThread Chatting.genruntimeconfig.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\2. MultiThread Chatting Server\MultiThread Chatting\obj\Release\net8.0\ref\MultiThread Chatting.dll
