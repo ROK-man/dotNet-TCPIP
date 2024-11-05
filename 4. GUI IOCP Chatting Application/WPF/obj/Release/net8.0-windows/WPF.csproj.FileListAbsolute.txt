@@ -18,3 +18,5 @@ C:\Users\ROKman\Desktop\dotNet-TCPIP\4. GUI IOCP Chatting Application\WPF\obj\Re
 C:\Users\ROKman\Desktop\dotNet-TCPIP\4. GUI IOCP Chatting Application\WPF\obj\Release\net8.0-windows\WPF.pdb
 C:\Users\ROKman\Desktop\dotNet-TCPIP\4. GUI IOCP Chatting Application\WPF\obj\Release\net8.0-windows\WPF.genruntimeconfig.cache
 C:\Users\ROKman\Desktop\dotNet-TCPIP\4. GUI IOCP Chatting Application\WPF\obj\Release\net8.0-windows\ref\WPF.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\4. GUI IOCP Chatting Application\WPF\obj\Release\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\ROKman\Desktop\dotNet-TCPIP\4. GUI IOCP Chatting Application\WPF\obj\Release\net8.0-windows\WPF_MarkupCompile.lref

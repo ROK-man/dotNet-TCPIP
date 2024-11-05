@@ -21,11 +21,25 @@ namespace WPF
         public string? Name { get; set; }
         public string? Status { get; set; }  // 예: 온라인/오프라인 상태
     }
+
+    public class CustomButton : Button
+    {
+        public static readonly DependencyProperty CloseButtonVisibleProperty =
+            DependencyProperty.Register("CloseButtonVisible", typeof(bool), typeof(CustomButton), new PropertyMetadata(false));
+
+        public bool CloseButtonVisible
+        {
+            get { return (bool)GetValue(CloseButtonVisibleProperty); }
+            set { SetValue(CloseButtonVisibleProperty, value); }
+        }
+    }
+
     public partial class MainWindow : Window
     {
         public ObservableCollection<Friend>? Friendss { get; set; }
         private string currentPanel = "";
         bool isPlaying = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -170,7 +184,6 @@ namespace WPF
                     }
                 }
 
-                // 이미 추가된 친구라면 추가하지 않음
                 if (isAlreadyAdded) return;
 
                 // StackPanel의 총 폭과 현재 요소의 폭을 계산
@@ -183,36 +196,53 @@ namespace WPF
                     }
                 }
 
-                // 현재 창 폭과 비교하여 새로운 채팅 요소를 추가할지 결정
-                if (totalWidth + 150 >= this.ActualWidth - 200) // 150은 예제 요소 폭
+                if (totalWidth + 150 >= this.ActualWidth - 200)
                 {
-                    // 화면에 가득 찼다면 마지막 요소 제거
                     if (ChatElementsPanel.Children.Count > 0)
                     {
                         ChatElementsPanel.Children.RemoveAt(ChatElementsPanel.Children.Count - 1);
                     }
                 }
 
-                // 새 채팅 요소 생성
-                Button chatElement = new Button
+                // CustomButton 생성
+                CustomButton chatElement = new CustomButton
                 {
                     Content = $"{selectedFriend.Name}",
-                    Width = 80,
+                    Width = 100,
                     Height = 33,
                     VerticalAlignment = VerticalAlignment.Stretch,
+                    Template = (ControlTemplate)FindResource("MouseOverButtonTemplate"),
                     Tag = Brushes.DarkGray,
-                    Margin = new Thickness(0, 0, 1, 0)
+                    Margin = new Thickness(0, 0, 1, 0),
+                    CloseButtonVisible = true
                 };
-
-                // 템플릿을 리소스에서 가져와 적용
-                chatElement.Template = (ControlTemplate)FindResource("MouseOverButtonTemplate");
 
                 // 패널에 추가
                 ChatElementsPanel.Children.Add(chatElement);
             }
         }
 
+        private void XButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button closeButton && closeButton.TemplatedParent is Button parentButton)
+            {
+                // 부모 패널에서 해당 버튼 제거
+                ChatElementsPanel.Children.Remove(parentButton);
+            }
+        }
 
-
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(Status.Text.Equals("● Offline"))
+            {
+                Status.Text = "● Online";
+                Status.Foreground = Brushes.Green;
+            }
+            else
+            {
+                Status.Text = "● Offline";
+                Status.Foreground = Brushes.Red;
+            }
+        }
     }
 }
