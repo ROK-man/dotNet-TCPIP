@@ -39,6 +39,8 @@ namespace WPF
         public ObservableCollection<Friend>? Friendss { get; set; }
         private string currentPanel = "";
         bool isPlaying = false;
+        bool chatingPanel = false;
+        private string currentChatFriend = "";
 
         public MainWindow()
         {
@@ -215,25 +217,87 @@ namespace WPF
                     Tag = Brushes.DarkGray,
                     Margin = new Thickness(0, 0, 1, 0),
                     CloseButtonVisible = true
+
                 };
+
+                chatElement.Click += ChatElement_Click;
 
                 // 패널에 추가
                 ChatElementsPanel.Children.Add(chatElement);
             }
         }
-
-        private void XButton_Click(object sender, RoutedEventArgs e)
+        private void ChatElement_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button closeButton && closeButton.TemplatedParent is Button parentButton)
+
+            if (sender is CustomButton clickedButton)
             {
-                // 부모 패널에서 해당 버튼 제거
-                ChatElementsPanel.Children.Remove(parentButton);
+                string friendName = clickedButton.Content.ToString() ?? "";
+                if (friendName.Equals(currentChatFriend))
+                {
+                    ChatPanel.Visibility = Visibility.Collapsed;
+                    if (chatingPanel)
+                    {
+                        chatingPanel = !chatingPanel;
+                    }
+                    currentChatFriend = "";
+                    return;
+                }
+
+                ChatHeader.Text = $"{friendName}";
+                currentChatFriend = friendName ?? "";
+
+
+                // 클릭된 버튼의 위치 계산
+                var buttonPosition = clickedButton.TransformToAncestor(this).Transform(new Point(0, 0));
+
+                // 채팅 패널 위치 설정 (버튼 위로 위치 조정)
+                ChatPanel.Margin = new Thickness(buttonPosition.X, 0, 0, 0);
+
+                ChatMessages.Items.Clear();
+
+                if (!chatingPanel)
+                {
+                    chatingPanel = !chatingPanel;
+                    ChatPanel.Visibility = Visibility.Visible;
+                }
             }
         }
 
+        // X 버튼 클릭 이벤트 핸들러
+        private void XButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 이벤트 발생한 버튼을 찾음
+            var closeButton = sender as Button;
+            if (closeButton == null) return;
+
+            // VisualTreeHelper를 사용하여 상위 CustomButton을 찾음
+            var customButton = FindParent<CustomButton>(closeButton);
+            if (customButton == null) return;
+
+            // ChatElementsPanel에서 해당 버튼을 삭제
+            ChatElementsPanel.Children.Remove(customButton);
+        }
+
+        // 부모 요소를 찾기 위한 헬퍼 메서드
+        private T FindParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            // 부모 요소가 존재하는 동안 탐색
+            DependencyObject parent = VisualTreeHelper.GetParent(child);
+            while (parent != null)
+            {
+                if (parent is T parentAsT)
+                {
+                    return parentAsT;
+                }
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+            return null;
+        }
+
+
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(Status.Text.Equals("● Offline"))
+            if (Status.Text.Equals("● Offline"))
             {
                 Status.Text = "● Online";
                 Status.Foreground = Brushes.Green;
@@ -243,6 +307,19 @@ namespace WPF
                 Status.Text = "● Offline";
                 Status.Foreground = Brushes.Red;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClosButton_Click(object sender, RoutedEventArgs e)
+        {
+            currentPanel = ""; // 현재 패널을 초기화
+            FriendsPanel.Visibility = Visibility.Collapsed;
+            GroupPanel.Visibility = Visibility.Collapsed;
+            NoticePanel.Visibility = Visibility.Collapsed;
         }
     }
 }

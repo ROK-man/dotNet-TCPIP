@@ -88,8 +88,19 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Margin="0,80,0,33">
+            <!--Middle Area-->
+            <Grid Margin="0,80,0,33" VerticalAlignment="Bottom" HorizontalAlignment="Left">
                 <MediaElement x:Name="MyMediaElement" Source="Video.mp4" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" MediaEnded="MyMediaElement_MediaEnded" />
+
+                <Border x:Name="ChatPanel" Width="300" Height="400" Background="LightGray" Visibility="Collapsed" CornerRadius="5">
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock x:Name="ChatHeader" Text="Chat" FontSize="16" FontWeight="Bold" Margin="10"/>
+                            <ListBox x:Name="ChatMessages"/>
+                        </StackPanel>
+                        <TextBox x:Name="ChatInput" Margin="10" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </Border>
             </Grid>
 
 
@@ -107,7 +118,10 @@
                             </Grid.RowDefinitions>
 
                             <!-- 위쪽 영역 -->
-                            <TextBlock Text="User Name" FontSize="20" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6, 0,0,0"/>
+                            <Grid>
+                                <TextBlock Text="User Name" FontSize="20" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6, 0,0,0"/>
+                                <Button Content="ㅡ" Width="20" Background="Transparent" Foreground="Black" VerticalContentAlignment="Top" HorizontalAlignment="Right" RenderTransformOrigin="0.525,0" Margin="0,0,0,20" Click="ClosButton_Click"/>
+                            </Grid>
 
                             <!-- 아래쪽 영역 -->
                             <TextBlock Name="Status" Text="● Offline" Foreground="Red" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,0,5"
