@@ -276,6 +276,13 @@ namespace WPF
 
             // ChatElementsPanel에서 해당 버튼을 삭제
             ChatElementsPanel.Children.Remove(customButton);
+
+            // 채팅 패널 그냥 닫아버리기
+            if (chatingPanel)
+            {
+                chatingPanel = !chatingPanel;
+                ChatPanel.Visibility = Visibility.Collapsed;
+            }
         }
 
         // 부모 요소를 찾기 위한 헬퍼 메서드
