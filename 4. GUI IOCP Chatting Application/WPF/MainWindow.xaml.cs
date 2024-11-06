@@ -214,12 +214,14 @@ namespace WPF
                     Height = 33,
                     VerticalAlignment = VerticalAlignment.Stretch,
                     Template = (ControlTemplate)FindResource("MouseOverButtonTemplate"),
-                    Tag = Brushes.DarkGray,
+                    Tag = "#303030",
                     Margin = new Thickness(0, 0, 1, 0),
-                    CloseButtonVisible = true
+                    CloseButtonVisible = true,
+                    Background = new SolidColorBrush(Color.FromRgb(40, 40, 40)),
+                    Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255))
 
                 };
-
+                
                 chatElement.Click += ChatElement_Click;
 
                 // 패널에 추가
