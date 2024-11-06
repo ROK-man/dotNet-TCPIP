@@ -228,7 +228,6 @@ namespace WPF
         }
         private void ChatElement_Click(object sender, RoutedEventArgs e)
         {
-
             if (sender is CustomButton clickedButton)
             {
                 string friendName = clickedButton.Content.ToString() ?? "";
@@ -266,6 +265,7 @@ namespace WPF
         // X 버튼 클릭 이벤트 핸들러
         private void XButton_Click(object sender, RoutedEventArgs e)
         {
+            e.Handled = true; // 이게 있어야 뒤에 버튼 안 눌리고 버그 안 남
             // 이벤트 발생한 버튼을 찾음
             var closeButton = sender as Button;
             if (closeButton == null) return;
@@ -307,11 +307,6 @@ namespace WPF
                 Status.Text = "● Offline";
                 Status.Foreground = Brushes.Red;
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void ClosButton_Click(object sender, RoutedEventArgs e)
