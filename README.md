@@ -1,7 +1,8 @@
 # dotNet-TCPIP
-chatting server practice with .net (c#) 
-
-GUI programming with WPF
+.Net을 통한 네트워크 프로그래밍 실습 프로젝트입니다.
+소켓통신을 위한 Async Await 비동기 프로그래밍과 Thread 개념 정리부터,
+여러 형태의 서버를 구현하며 소켓통신에 대해 다룹니다.
+마지막으로 WPF를 사용해 간단한 GUI 채팅 클라이언트를 만들어 실질적인 서버 프로그래밍을 살짝 다룹니다.
 
 
 toDo
