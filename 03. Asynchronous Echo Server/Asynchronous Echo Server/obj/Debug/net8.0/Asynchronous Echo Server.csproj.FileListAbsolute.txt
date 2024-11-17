@@ -1,0 +1,15 @@
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\Asynchronous Echo Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\Asynchronous Echo Server.AssemblyInfoInputs.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\Asynchronous Echo Server.AssemblyInfo.cs
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\Asynchronous Echo Server.csproj.CoreCompileInputs.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\Asynchronous Echo Server.sourcelink.json
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\bin\Debug\net8.0\Asynchronous Echo Server.exe
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\bin\Debug\net8.0\Asynchronous Echo Server.deps.json
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\bin\Debug\net8.0\Asynchronous Echo Server.runtimeconfig.json
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\bin\Debug\net8.0\Asynchronous Echo Server.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\bin\Debug\net8.0\Asynchronous Echo Server.pdb
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\Asynchronous Echo Server.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\refint\Asynchronous Echo Server.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\Asynchronous Echo Server.pdb
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\Asynchronous Echo Server.genruntimeconfig.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\03. Asynchronous Echo Server\Asynchronous Echo Server\obj\Debug\net8.0\ref\Asynchronous Echo Server.dll
