@@ -1,17 +1,13 @@
 is_global = true
-build_property.TargetFramework = net8.0
-build_property.TargetPlatformMinVersion = 
+build_property.TargetFramework = net8.0-windows
+build_property.TargetPlatformMinVersion = 7.0
 build_property.UsingMicrosoftNETSdkWeb = 
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
-build_property.RootNamespace = Server
-<<<<<<< HEAD
-build_property.ProjectDir = C:\Users\ROKman\Desktop\dotNet-TCPIP\02. Simple Echo Server\Server\
-=======
-build_property.ProjectDir = C:\Users\Code\Desktop\dotNet-TCPIP\02. Simple Echo Server\Server\
->>>>>>> refs/remotes/origin/main
+build_property.RootNamespace = WPF_rw03rbbf_wpftmp
+build_property.ProjectDir = C:\Users\ROKman\Desktop\dotNet-TCPIP\10. GUI IOCP Chatting Application\WPF\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

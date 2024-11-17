@@ -14,19 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Server.csproj",
-      "projectName": "Server",
-      "projectPath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Server.csproj",
-      "packagesPath": "C:\\Users\\ROKman\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Server.csproj",
-      "projectName": "Server",
-      "projectPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Server.csproj",
+      "projectUniqueName": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\03. Asynchronous Echo Server\\Asynchronous Client\\Asynchronous Client.csproj",
+      "projectName": "Asynchronous Client",
+      "projectPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\03. Asynchronous Echo Server\\Asynchronous Client\\Asynchronous Client.csproj",
       "packagesPath": "C:\\Users\\Code\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\obj\\",
->>>>>>> refs/remotes/origin/main
+      "outputPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\03. Asynchronous Echo Server\\Asynchronous Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

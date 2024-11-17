@@ -11,16 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("Server")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Asynchronous Client")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52397a622c01c566f9104cd803b5ef0f919c03da")]
-=======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a210b42d0b7f2529b406ab45dc73590a9fab408")]
->>>>>>> refs/remotes/origin/main
-[assembly: System.Reflection.AssemblyProductAttribute("Server")]
-[assembly: System.Reflection.AssemblyTitleAttribute("Server")]
+[assembly: System.Reflection.AssemblyProductAttribute("Asynchronous Client")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Asynchronous Client")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // MSBuild WriteCodeFragment 클래스에서 생성되었습니다.

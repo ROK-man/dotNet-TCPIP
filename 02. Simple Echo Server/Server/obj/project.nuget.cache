@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "smjMKeKXzak=",
   "success": true,
   "projectFilePath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Server.csproj",
+=======
+  "dgSpecHash": "rx0W6jGcS0w=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Server.csproj",
+>>>>>>> refs/remotes/origin/main
   "expectedPackageFiles": [],
   "logs": []
 }
