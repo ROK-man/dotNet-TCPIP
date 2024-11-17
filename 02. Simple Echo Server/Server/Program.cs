@@ -8,7 +8,7 @@ namespace dotNet
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             IPEndPoint ipEndPoint = new(IPAddress.Loopback, 25000);
             Socket socket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -17,12 +17,12 @@ namespace dotNet
             socket.Listen(1);
             Console.WriteLine("Listening socket is waiting for a connection...");
 
-            var handler = socket.Accept();
+            var handler = await socket.AcceptAsync();
             Console.WriteLine("Client connected: " + handler.RemoteEndPoint?.ToString());
 
             var buffer = new byte[1024];
             int received;
-            while ((received = handler.Receive(buffer, SocketFlags.None)) > 0)
+            while ((received = await handler.ReceiveAsync(buffer, SocketFlags.None)) > 0)
             {
                 var response = Encoding.UTF8.GetString(buffer, 0, received);
 
