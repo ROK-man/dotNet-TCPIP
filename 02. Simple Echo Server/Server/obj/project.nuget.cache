@@ -1,14 +1,15 @@
 {
   "version": 2,
-<<<<<<< HEAD
-  "dgSpecHash": "smjMKeKXzak=",
+  "dgSpecHash": "Y+Z7BVfXDx4=",
   "success": true,
   "projectFilePath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Server.csproj",
-=======
-  "dgSpecHash": "rx0W6jGcS0w=",
-  "success": true,
-  "projectFilePath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Server.csproj",
->>>>>>> refs/remotes/origin/main
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

@@ -10,63 +10,45 @@ namespace Asynchronous_Echo_Server
     {
         static async Task Main(string[] args)
         {
+            // 리스닝 소켓 바인딩 및 리스닝 시작
             Socket listeningSocket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             listeningSocket.Bind(new IPEndPoint(IPAddress.Loopback, 25000));
-            listeningSocket.Listen();
+            listeningSocket.Listen(1);
 
             Console.WriteLine("Server ready to connect");
 
+
+            // 서버 동작          
             while (true)
             {
                 Socket handler = await listeningSocket.AcceptAsync();
-                Console.WriteLine("Client connected");
+                Console.WriteLine($"Client connected : {handler.RemoteEndPoint.ToString()}");
                 byte[] buffer = new byte[65536];
                 int bytesRead;
 
-                while (true)
+                Task receive = handler.ReceiveAsync(buffer, SocketFlags.None);
+
+                while (handler.Connected)
                 {
-                    try
+                    if (receive.IsCompleted)
                     {
-                        bytesRead = await handler.ReceiveAsync(buffer, SocketFlags.None);
-                    }
-                    catch (Exception e)
-                    {
-                        break;
-                    }
-                    finally
-                    {
+                        bytesRead = ((Task<int>)receive).Result;
+                        if (bytesRead > 0)
+                        {
+                            string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                            Console.WriteLine(message);
+                            var sendBuffer = Encoding.UTF8.GetBytes(message);
 
+                            _ = handler.Send(sendBuffer);
+                            receive = handler.ReceiveAsync(buffer, SocketFlags.None);
+                        }
                     }
-                    if (bytesRead == 0)
-                        break;
-
-                    var response = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Console.WriteLine("Server received: " + response);
-
-                    if (response.ToLower() == "exit")
-                    {
-                        Console.WriteLine("Client wants to disconnect");
-                        break;
-                    }
-
-                    var echo = Encoding.UTF8.GetBytes(response.ToUpper());
-                    await handler.SendAsync(echo, SocketFlags.None);
-                    Console.WriteLine("Server sent: " + response.ToUpper());
                 }
-
 
                 handler.Shutdown(SocketShutdown.Both);
                 handler.Close();
                 Console.WriteLine("Client disconnected");
-
-                //string input = Console.ReadLine();
-                //if (input == "close")
-                //{
-                //    break;
-                //}
             }
-            listeningSocket.Close();
-            Console.WriteLine("Server closed");
         }
     }
 }

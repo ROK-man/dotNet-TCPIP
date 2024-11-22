@@ -1,0 +1,15 @@
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\bin\Debug\net8.0\MultiThread Client.exe
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\bin\Debug\net8.0\MultiThread Client.deps.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\bin\Debug\net8.0\MultiThread Client.runtimeconfig.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\bin\Debug\net8.0\MultiThread Client.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\bin\Debug\net8.0\MultiThread Client.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\MultiThread Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\MultiThread Client.AssemblyInfoInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\MultiThread Client.AssemblyInfo.cs
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\MultiThread Client.csproj.CoreCompileInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\MultiThread Client.sourcelink.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\MultiThread Client.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\refint\MultiThread Client.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\MultiThread Client.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\MultiThread Client.genruntimeconfig.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\04. MultiThread Server\MultiThread Client\obj\Debug\net8.0\ref\MultiThread Client.dll

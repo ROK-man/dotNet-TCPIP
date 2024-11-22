@@ -1,16 +1,9 @@
 {
   "Version": 1,
-<<<<<<< HEAD
   "WorkspaceRootPath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\",
   "Documents": [
     {
       "AbsoluteMoniker": "D:0:0:{615039DD-95DC-4DDF-AEDC-4B3BB9494473}|Server.csproj|c:\\users\\rokman\\desktop\\dotnet-tcpip\\02. simple echo server\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-=======
-  "WorkspaceRootPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{615039DD-95DC-4DDF-AEDC-4B3BB9494473}|Server.csproj|c:\\users\\code\\desktop\\dotnet-tcpip\\02. simple echo server\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
->>>>>>> refs/remotes/origin/main
       "RelativeMoniker": "D:0:0:{615039DD-95DC-4DDF-AEDC-4B3BB9494473}|Server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -21,8 +14,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwBEAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-02T11:33:52.91Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -36,25 +42,8 @@
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-<<<<<<< HEAD
-              "DocumentMoniker": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAowBMAAAAAAAAAAAAAAA==",
-=======
-              "DocumentMoniker": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\02. Simple Echo Server\\Server\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwCQAAAAwAAAAAAAAAA==",
->>>>>>> refs/remotes/origin/main
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-02T11:33:52.91Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
             }
           ]
         }
