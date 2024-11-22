@@ -1,4 +1,4 @@
-#.Net에서의 비동기 프로그래밍
+#C#에서의 비동기 프로그래밍
 
 닷넷에서는 Thread와 Tesk로 비동기를 수행
 Thread는 .Net 초기버전부터 있었으나 특별한 경우가 아니면 잘 사용하지 않음
@@ -16,7 +16,7 @@ Task 완료 대기
 Task task = Task.Factory.StartNew(method, TaskCreationOptions.AttachedToParent);
 
 임계 영역 설정
-public static object CS = new();로 빈 객체 생성 후 lock(CS); 를 사용
+object CS = new();로 빈 객체 생성 후 lock(CS); 를 사용
 (내부 구현에선 lock 구문이 try Moniter.Enter(object); finally Moniter.Exit(object);로 구현됨
 Moniter.TryEnter(object, TimeSpan.FromSeconds(n)); 타임아웃 설정
 

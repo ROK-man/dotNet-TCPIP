@@ -89,7 +89,6 @@ namespace EventSelect_Server
                     }
                     else
                     {
-                        // Handle client communication
                         _ = Task.Run(() => HandleClient(socket));
                     }
                 }
@@ -128,7 +127,7 @@ namespace EventSelect_Server
             {
                 foreach (var client in clients.ToList())
                 {
-                    if (client != excludeClient && client != clients[0]) // Skip the listening socket
+                    if (client != excludeClient && client != clients[0])
                     {
                         try
                         {
