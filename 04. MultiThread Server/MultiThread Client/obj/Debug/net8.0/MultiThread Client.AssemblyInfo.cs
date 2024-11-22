@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MultiThread Client")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e670b3cfe0af693b697dcf3c08abd276f6ef409b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0fe628da11c4069f519aedba249f74cbbc574eba")]
 [assembly: System.Reflection.AssemblyProductAttribute("MultiThread Client")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MultiThread Client")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

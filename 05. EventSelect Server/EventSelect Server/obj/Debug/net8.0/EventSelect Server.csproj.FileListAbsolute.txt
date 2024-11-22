@@ -1,0 +1,15 @@
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\bin\Debug\net8.0\EventSelect Server.exe
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\bin\Debug\net8.0\EventSelect Server.deps.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\bin\Debug\net8.0\EventSelect Server.runtimeconfig.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\bin\Debug\net8.0\EventSelect Server.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\bin\Debug\net8.0\EventSelect Server.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\EventSelect Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\EventSelect Server.AssemblyInfoInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\EventSelect Server.AssemblyInfo.cs
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\EventSelect Server.csproj.CoreCompileInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\EventSelect Server.sourcelink.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\EventSelect Server.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\refint\EventSelect Server.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\EventSelect Server.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\EventSelect Server.genruntimeconfig.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\5. EventSelect Server\EventSelect Server\obj\Debug\net8.0\ref\EventSelect Server.dll
