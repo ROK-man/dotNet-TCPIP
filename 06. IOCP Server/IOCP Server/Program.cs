@@ -42,7 +42,7 @@ namespace IOCP_Server
         {
             listeningSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             listeningSocket.Bind(new IPEndPoint(IPAddress.Loopback, 25000));
-            listeningSocket.Listen(100);
+            listeningSocket.Listen();
 
             Console.WriteLine("Server started. Waiting for clients...");
             Console.WriteLine($"Server Address: {listeningSocket.LocalEndPoint}");

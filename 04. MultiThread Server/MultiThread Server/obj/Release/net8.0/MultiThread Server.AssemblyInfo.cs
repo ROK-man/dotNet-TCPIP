@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MultiThread Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0fe628da11c4069f519aedba249f74cbbc574eba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f58cbf55c336e695c2a7d8bbb390e9e661bb39bd")]
 [assembly: System.Reflection.AssemblyProductAttribute("MultiThread Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MultiThread Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

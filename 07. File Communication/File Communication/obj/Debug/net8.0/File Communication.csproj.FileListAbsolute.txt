@@ -1,0 +1,15 @@
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\bin\Debug\net8.0\File Communication.exe
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\bin\Debug\net8.0\File Communication.deps.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\bin\Debug\net8.0\File Communication.runtimeconfig.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\bin\Debug\net8.0\File Communication.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\bin\Debug\net8.0\File Communication.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\File Communication.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\File Communication.AssemblyInfoInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\File Communication.AssemblyInfo.cs
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\File Communication.csproj.CoreCompileInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\File Communication.sourcelink.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\File Communication.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\refint\File Communication.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\File Communication.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\File Communication.genruntimeconfig.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\File Communication\obj\Debug\net8.0\ref\File Communication.dll

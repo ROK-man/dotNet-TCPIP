@@ -1,0 +1,15 @@
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\bin\Debug\net8.0\Client.exe
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\bin\Debug\net8.0\Client.deps.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\bin\Debug\net8.0\Client.runtimeconfig.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\bin\Debug\net8.0\Client.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\bin\Debug\net8.0\Client.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\Client.AssemblyInfoInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\Client.AssemblyInfo.cs
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\Client.csproj.CoreCompileInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\Client.sourcelink.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\Client.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\refint\Client.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\Client.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\Client.genruntimeconfig.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\07. File Communication\Client\obj\Debug\net8.0\ref\Client.dll
