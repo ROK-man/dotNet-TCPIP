@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Client
 {
+
+    // 통신에 사용할 데이터 덩어리
     public class ProtocolMessage
     {
         public int CommandType { get; set; }  // 1=메시지, 2=파일 리스트 요청, 3=파일 요청
@@ -50,6 +52,7 @@ namespace Client
 
                     var message = new ProtocolMessage();
 
+                    // 입력받은 내용대로 메시지 만든 후 보내기
                     switch (input)
                     {
                         case "1": // 메시지 보내기
@@ -95,6 +98,8 @@ namespace Client
             }
         }
 
+
+        // 메시지 수신 및 동작
         private static void ReceiveMessages(Socket clientSocket)
         {
             try
