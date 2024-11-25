@@ -18,7 +18,9 @@ namespace FileServer
 
         public static byte[] Serialize(ProtocolMessage obj)
         {
-            return JsonSerializer.SerializeToUtf8Bytes(obj);
+            var jsonData = JsonSerializer.SerializeToUtf8Bytes(obj);
+            var lengthBytes = BitConverter.GetBytes(jsonData.Length);
+            return lengthBytes.Concat(jsonData).ToArray(); // 헤더(4바이트) + JSON 데이터
         }
 
         public static ProtocolMessage Deserialize(byte[] data)
@@ -32,7 +34,7 @@ namespace FileServer
         private static readonly List<Socket> Clients = new();
         private static readonly string FilesDirectory = "SharedFiles";
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             if (!Directory.Exists(FilesDirectory))
             {
@@ -41,11 +43,6 @@ namespace FileServer
             }
 
             Console.WriteLine("Starting server...");
-            StartServer();
-        }
-
-        private static void StartServer()
-        {
             var listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             listener.Bind(new IPEndPoint(IPAddress.Loopback, 25000));
             listener.Listen(100);
@@ -54,7 +51,7 @@ namespace FileServer
 
             while (true)
             {
-                var clientSocket = listener.Accept();
+                var clientSocket = await listener.AcceptAsync();
                 Console.WriteLine($"Client connected: {clientSocket.RemoteEndPoint}");
                 lock (Clients) Clients.Add(clientSocket);
 
@@ -62,42 +59,30 @@ namespace FileServer
             }
         }
 
-        private static void HandleClient(Socket clientSocket)
+        private static async Task HandleClient(Socket clientSocket)
         {
+            var buffer = new List<byte>();
             try
             {
                 while (true)
                 {
-                    byte[] buffer = new byte[4096];
-                    int receivedBytes = clientSocket.Receive(buffer);
+                    var tempBuffer = new byte[4096];
+                    int receivedBytes = await clientSocket.ReceiveAsync(tempBuffer, SocketFlags.None);
+                    if (receivedBytes == 0) break;
 
-                    if (receivedBytes > 0)
+                    buffer.AddRange(tempBuffer.Take(receivedBytes));
+
+                    while (buffer.Count >= 4) // 최소한 헤더 크기(4바이트)가 있어야 함
                     {
-                        var message = ProtocolMessage.Deserialize(buffer.Take(receivedBytes).ToArray());
+                        int messageLength = BitConverter.ToInt32(buffer.Take(4).ToArray(), 0);
 
-                        switch (message.CommandType)
-                        {
-                            case 1:
-                                Console.WriteLine($"Message from {clientSocket.RemoteEndPoint}: {message.Message}");
-                                BroadcastMessage(message.Message, clientSocket);
-                                break;
+                        if (buffer.Count < 4 + messageLength) break; // 메시지가 아직 다 도착하지 않음
 
-                            case 2:
-                                SendFileList(clientSocket);
-                                break;
+                        var messageData = buffer.Skip(4).Take(messageLength).ToArray();
+                        buffer.RemoveRange(0, 4 + messageLength);
 
-                            case 3:
-                                SendFile(clientSocket, message.FileIndex);
-                                break;
-
-                            default:
-                                Console.WriteLine("Unknown command received.");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        break;
+                        var message = ProtocolMessage.Deserialize(messageData);
+                        await ProcessMessage(clientSocket, message);
                     }
                 }
             }
@@ -108,6 +93,29 @@ namespace FileServer
             finally
             {
                 DisconnectClient(clientSocket);
+            }
+        }
+
+        private static async Task ProcessMessage(Socket clientSocket, ProtocolMessage message)
+        {
+            switch (message.CommandType)
+            {
+                case 1: // 메시지 브로드캐스트
+                    Console.WriteLine($"Message from {clientSocket.RemoteEndPoint}: {message.Message}");
+                    BroadcastMessage(message.Message, clientSocket);
+                    break;
+
+                case 2: // 파일 리스트 요청
+                    await SendFileList(clientSocket);
+                    break;
+
+                case 3: // 파일 요청
+                    await SendFile(clientSocket, message.FileIndex);
+                    break;
+
+                default:
+                    Console.WriteLine("Unknown command received.");
+                    break;
             }
         }
 
@@ -135,23 +143,23 @@ namespace FileServer
             }
         }
 
-        private static void SendFileList(Socket clientSocket)
+        private static async Task SendFileList(Socket clientSocket)
         {
             var files = Directory.GetFiles(FilesDirectory);
             var fileList = string.Join(Environment.NewLine, files.Select((f, i) => $"{i}: {Path.GetFileName(f)}"));
 
             var response = new ProtocolMessage { CommandType = 2, Message = fileList };
-            clientSocket.Send(ProtocolMessage.Serialize(response));
+            await clientSocket.SendAsync(ProtocolMessage.Serialize(response), SocketFlags.None);
         }
 
-        private static void SendFile(Socket clientSocket, int fileIndex)
+        private static async Task SendFile(Socket clientSocket, int fileIndex)
         {
             var files = Directory.GetFiles(FilesDirectory);
 
             if (fileIndex < 0 || fileIndex >= files.Length)
             {
                 var error = new ProtocolMessage { CommandType = 1, Message = "Invalid file index." };
-                clientSocket.Send(ProtocolMessage.Serialize(error));
+                await clientSocket.SendAsync(ProtocolMessage.Serialize(error), SocketFlags.None);
                 return;
             }
 
@@ -159,18 +167,11 @@ namespace FileServer
             string fileName = Path.GetFileName(filePath);
             byte[] fileData = File.ReadAllBytes(filePath);
 
-            try
-            {
-                var startMessage = new ProtocolMessage { CommandType = 3, Message = fileName };
-                clientSocket.Send(ProtocolMessage.Serialize(startMessage));
+            var startMessage = new ProtocolMessage { CommandType = 3, Message = fileName };
+            await clientSocket.SendAsync(ProtocolMessage.Serialize(startMessage), SocketFlags.None);
 
-                clientSocket.Send(fileData);
-                Console.WriteLine($"File {fileName} sent successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while sending file: {ex.Message}");
-            }
+            await clientSocket.SendAsync(fileData, SocketFlags.None);
+            Console.WriteLine($"File {fileName} sent successfully.");
         }
 
         private static void DisconnectClient(Socket client)

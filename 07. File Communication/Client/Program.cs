@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -8,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-
-    // 통신에 사용할 데이터 덩어리
     public class ProtocolMessage
     {
         public int CommandType { get; set; }  // 1=메시지, 2=파일 리스트 요청, 3=파일 요청
@@ -18,7 +17,9 @@ namespace Client
 
         public static byte[] Serialize(ProtocolMessage obj)
         {
-            return JsonSerializer.SerializeToUtf8Bytes(obj);
+            var jsonData = JsonSerializer.SerializeToUtf8Bytes(obj);
+            var lengthBytes = BitConverter.GetBytes(jsonData.Length);
+            return lengthBytes.Concat(jsonData).ToArray(); // 헤더(4바이트) + JSON 데이터
         }
 
         public static ProtocolMessage Deserialize(byte[] data)
@@ -29,16 +30,16 @@ namespace Client
 
     internal class Program
     {
-        static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             try
             {
-                clientSocket.Connect(new IPEndPoint(IPAddress.Loopback, 25000));
+                await clientSocket.ConnectAsync(new IPEndPoint(IPAddress.Loopback, 25000));
                 Console.WriteLine("Connected to server!");
 
-                Task.Run(() => ReceiveMessages(clientSocket));
+                _ = Task.Run(() => ReceiveMessages(clientSocket)); // 비동기 수신 작업 실행
 
                 while (true)
                 {
@@ -46,13 +47,10 @@ namespace Client
                     var input = Console.ReadLine();
 
                     if (input?.ToLower() == "exit")
-                    {
                         break;
-                    }
 
                     var message = new ProtocolMessage();
 
-                    // 입력받은 내용대로 메시지 만든 후 보내기
                     switch (input)
                     {
                         case "1": // 메시지 보내기
@@ -85,7 +83,7 @@ namespace Client
                     }
 
                     byte[] buffer = ProtocolMessage.Serialize(message);
-                    clientSocket.Send(buffer);
+                    await clientSocket.SendAsync(buffer, SocketFlags.None);
                 }
             }
             catch (Exception ex)
@@ -98,41 +96,31 @@ namespace Client
             }
         }
 
-
-        // 메시지 수신 및 동작
-        private static void ReceiveMessages(Socket clientSocket)
+        private static async Task ReceiveMessages(Socket clientSocket)
         {
+            var buffer = new List<byte>();
             try
             {
                 while (true)
                 {
-                    byte[] buffer = new byte[4096];
-                    int receivedBytes = clientSocket.Receive(buffer);
+                    var tempBuffer = new byte[4096];
+                    int receivedBytes = await clientSocket.ReceiveAsync(tempBuffer, SocketFlags.None);
 
-                    if (receivedBytes > 0)
+                    if (receivedBytes == 0) break; // 연결 종료
+                    buffer.AddRange(tempBuffer.Take(receivedBytes));
+
+                    while (buffer.Count >= 4) // 최소한 헤더 크기(4바이트)가 있어야 함
                     {
-                        var message = ProtocolMessage.Deserialize(buffer.Take(receivedBytes).ToArray());
+                        int messageLength = BitConverter.ToInt32(buffer.Take(4).ToArray(), 0);
 
-                        switch (message.CommandType)
-                        {
-                            case 1: // 일반 메시지
-                                Console.WriteLine($"Server Message: {message.Message}");
-                                break;
+                        if (buffer.Count < 4 + messageLength) break; // 메시지가 아직 다 도착하지 않음
 
-                            case 2: // 파일 리스트
-                                Console.WriteLine("File List:");
-                                Console.WriteLine(message.Message);
-                                break;
+                        var messageData = buffer.Skip(4).Take(messageLength).ToArray();
+                        buffer.RemoveRange(0, 4 + messageLength);
 
-                            case 3: // 파일 데이터
-                                Console.WriteLine("Receiving file...");
-                                SaveFile(clientSocket, message.Message);
-                                break;
+                        var message = ProtocolMessage.Deserialize(messageData);
 
-                            default:
-                                Console.WriteLine("Unknown command from server.");
-                                break;
-                        }
+                        await ProcessMessage(clientSocket, message);
                     }
                 }
             }
@@ -142,19 +130,44 @@ namespace Client
             }
         }
 
-        private static void SaveFile(Socket clientSocket, string fileName)
+        private static async Task ProcessMessage(Socket clientSocket, ProtocolMessage message)
+        {
+            switch (message.CommandType)
+            {
+                case 1: // 일반 메시지
+                    Console.WriteLine($"Server Message: {message.Message}");
+                    break;
+
+                case 2: // 파일 리스트
+                    Console.WriteLine("File List:");
+                    Console.WriteLine(message.Message);
+                    break;
+
+                case 3: // 파일 데이터
+                    Console.WriteLine($"Receiving file: {message.Message}");
+                    await SaveFile(clientSocket, message.Message);
+                    break;
+
+                default:
+                    Console.WriteLine("Unknown command from server.");
+                    break;
+            }
+        }
+
+        private static async Task SaveFile(Socket clientSocket, string fileName)
         {
             string savePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+
             using (var fs = new FileStream(savePath, FileMode.Create, FileAccess.Write))
             {
                 byte[] buffer = new byte[4096];
                 int receivedBytes;
 
-                while ((receivedBytes = clientSocket.Receive(buffer)) > 0)
+                while ((receivedBytes = await clientSocket.ReceiveAsync(buffer, SocketFlags.None)) > 0)
                 {
                     fs.Write(buffer, 0, receivedBytes);
 
-                    // 파일 전송 완료 신호 확인
+                    // 데이터가 모두 전송된 신호로 데이터 크기가 버퍼보다 작으면 완료
                     if (receivedBytes < buffer.Length)
                         break;
                 }
