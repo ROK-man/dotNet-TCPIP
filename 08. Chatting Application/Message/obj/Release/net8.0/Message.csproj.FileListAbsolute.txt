@@ -1,0 +1,12 @@
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\bin\Release\net8.0\Message.deps.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\bin\Release\net8.0\Message.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\bin\Release\net8.0\Message.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Release\net8.0\Message.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Release\net8.0\Message.AssemblyInfoInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Release\net8.0\Message.AssemblyInfo.cs
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Release\net8.0\Message.csproj.CoreCompileInputs.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Release\net8.0\Message.sourcelink.json
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Release\net8.0\Message.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Release\net8.0\refint\Message.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Release\net8.0\Message.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Release\net8.0\ref\Message.dll

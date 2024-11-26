@@ -1,6 +1,6 @@
-﻿using ChattingServer;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
+using DLL;
 
 namespace ChattingApplication
 {

@@ -1,11 +1,10 @@
 ﻿using System.Text;
-using System.Text.Json;
 
-namespace ChattingServer
+namespace DLL
 {
-    internal class Message
+    // Message 클래스 정의
+    public class Message
     {
-        // 프로토콜 종류
         public static readonly int ERROR = -1;
         public static readonly int TEXT = 0;
         public static readonly int GETFILELIST = 50;
@@ -16,7 +15,7 @@ namespace ChattingServer
 
         public const int HEADERLENGTH = 20;
 
-        public Message(MessageHeader header, MessagePayload payload) 
+        public Message(MessageHeader header, MessagePayload payload)
         {
             this.Header = header;
             this.Payload = payload;
@@ -25,7 +24,7 @@ namespace ChattingServer
         public Message(int protocol, int textLength, int userID, string text)
         {
             this.Payload = new MessagePayload(text);
-            this.Header = new MessageHeader(protocol, textLength + 20, GetCheckSum(Payload.Text), userID);
+            this.Header = new MessageHeader(protocol, textLength + HEADERLENGTH, GetCheckSum(Payload.Text), userID);
         }
 
         public byte[] ToBytes()
@@ -40,15 +39,12 @@ namespace ChattingServer
             return data;
         }
 
-
         public static Message ParseByte(byte[] data)
         {
             MessageHeader header = MessageHeader.ParseByte(data);
             MessagePayload payload = MessagePayload.ParseByte(data, 20, header.TotalLength - 20);
 
-            Message message = new(header, payload);
-
-            return message;
+            return new Message(header, payload);
         }
 
         public bool CheckHeader()
@@ -60,8 +56,6 @@ namespace ChattingServer
         {
             return this.Header.CheckSum == GetCheckSum(this.Payload.Text);
         }
-
-
 
         private static int GetCheckSum(string text)
         {
@@ -81,7 +75,7 @@ namespace ChattingServer
         }
     }
 
-    // 크기가 20바이트 고정인 구조체
+    // MessageHeader 구조체
     public struct MessageHeader
     {
         public int Protocol;
@@ -99,7 +93,6 @@ namespace ChattingServer
             Key = 0x12345678;
         }
 
-        // 유효성 검사
         public bool IsHeader()
         {
             return Key == 0x12345678;
@@ -119,7 +112,7 @@ namespace ChattingServer
 
         public static MessageHeader ParseByte(byte[] data)
         {
-            MessageHeader header = new MessageHeader
+            return new MessageHeader
             {
                 Protocol = BitConverter.ToInt32(data, 0),        // 0~3: Protocol
                 TotalLength = BitConverter.ToInt32(data, 4),     // 4~7: TotalLength
@@ -127,16 +120,18 @@ namespace ChattingServer
                 UserID = BitConverter.ToInt32(data, 12),         // 12~15: UserID
                 Key = BitConverter.ToInt32(data, 16)             // 16~19: Key
             };
-
-            return header;
         }
     }
 
-
-
-    class MessagePayload(string text)
+    // MessagePayload 클래스
+    public class MessagePayload
     {
-        public string Text { get; set; } = text;
+        public string Text { get; set; }
+
+        public MessagePayload(string text)
+        {
+            this.Text = text;
+        }
 
         public byte[] ToBytes()
         {
@@ -148,6 +143,4 @@ namespace ChattingServer
             return new MessagePayload(Encoding.UTF8.GetString(data, index, count));
         }
     }
-
-
 }
