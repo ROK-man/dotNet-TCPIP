@@ -18,31 +18,33 @@ namespace ChattingServer
 
         public Message(MessageHeader header, MessagePayload payload)
         {
-            Message message = new Message(header, payload);
-            message.Header = header;
-            message.Payload = payload;
+            this.Header = header;
+            this.Payload = payload;
         }
 
         public Message(int protocol, int textLength, int userID, string text)
         {
             this.Payload = new MessagePayload(text);
-            this.Header = new MessageHeader(protocol, textLength + 20, GetCheckSum(Payload.Text), userID);
+            this.Header = new MessageHeader(protocol, textLength, GetCheckSum(Payload.Text), userID);
         }
 
         public byte[] ToBytes()
         {
-            List<byte> data = new List<byte>();
-            data.AddRange(Header.ToBytes());
-            data.AddRange(Payload.ToBytes());
+            byte[] headerBytes = Header.ToBytes();
+            byte[] payloadBytes = Payload.ToBytes();
 
-            return data.ToArray();
+            byte[] data = new byte[headerBytes.Length + payloadBytes.Length];
+            Buffer.BlockCopy(headerBytes, 0, data, 0, headerBytes.Length);
+            Buffer.BlockCopy(payloadBytes, 0, data, headerBytes.Length, payloadBytes.Length);
+
+            return data;
         }
+
 
         public static Message ParseByte(byte[] data)
         {
             MessageHeader header = MessageHeader.ParseByte(data);
-            MessagePayload payload = MessagePayload.ParseByte(data, 20, header.TotalLength);
-
+            MessagePayload payload = MessagePayload.ParseByte(data, 20, header.TotalLength - 20);
 
             Message message = new(header, payload);
 

@@ -204,7 +204,7 @@ namespace ChattingServer
                                 buffer.RemoveRange(0, header.TotalLength);               // 제거
                             }
                             var message = Message.ParseByte(fullMessage);
-                            Console.WriteLine($"from a: {message.Payload.Text}");
+                            Console.WriteLine($"from {message.Header.UserID}: {message.Payload.Text}");
 
                             //_ = BroadCast(message.Payload.Text);
                         }
