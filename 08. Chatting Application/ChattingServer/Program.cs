@@ -37,7 +37,7 @@ namespace ChattingServer
                 }
                 else if (input.ToLower().Equals("check"))
                 {
-
+                    Console.WriteLine($"Current connected clients: {sockets.Count}");
                 }
                 else if (input.ToLower().Equals("quit"))
                 {
@@ -148,9 +148,6 @@ namespace ChattingServer
 
                 if (e.BytesTransferred > 0)
                 {
-                    Console.WriteLine($"Bytes Transferred: {e.BytesTransferred}");
-                    Console.WriteLine($"Buffer Length: {e.Buffer.Length}");
-
                     for (int i = 0; i < e.BytesTransferred; ++i)
                     {
                         lock (bcs)
@@ -172,38 +169,52 @@ namespace ChattingServer
             }
         }
 
-        static async Task ProcessMessage()
+        static void ProcessMessage()
         {
-            byte[] data = new byte[4096];
-            if (buffer.Count > Message.HEADERLENGTH) // 값 확인만 할거라 lock 안 걸었음
+            while (true)
             {
-                for (int i = 0; i < Message.HEADERLENGTH; ++i)
+                // 헤더 길이만큼 데이터를 처리할 수 있는지 확인
+                if (buffer.Count > Message.HEADERLENGTH) // 값 확인만 할거라 lock 안 걸었음
                 {
-                    data[i] = buffer[i];
-                }
-
-                MessageHeader header = Message.DeserializeHeader(data);
-                if (!header.IsHeader())
-                {
-                    Console.WriteLine("Something very wrong");
-                }
-                if (header.Protocol == Message.TEXT)
-                {
-                    if (buffer.Count > header.TotalLength)
+                    // 1. buffer에서 HEADERLENGTH만큼 데이터를 가져옴
+                    byte[] headerData;
+                    lock (buffer)
                     {
-                        lock (bcs)
+                        headerData = buffer.Take(Message.HEADERLENGTH).ToArray(); // 복사
+                                                                                  //buffer.RemoveRange(0, Message.HEADERLENGTH);             // 제거
+                    }
+
+                    // 2. 헤더 파싱
+                    MessageHeader header = MessageHeader.ParseByte(headerData);
+                    if (!header.IsHeader())
+                    {
+                        Console.WriteLine("Something very wrong");
+                        continue;
+                    }
+
+                    // 3. 메시지의 총 길이를 확인하고, 메시지를 처리
+                    if (header.Protocol == Message.TEXT)
+                    {
+                        if (buffer.Count >= header.TotalLength)
                         {
-                            data = buffer.Take(header.TotalLength).ToArray();
+                            byte[] fullMessage;
+                            lock (buffer)
+                            {
+                                fullMessage = buffer.Take(header.TotalLength).ToArray(); // 복사
+                                buffer.RemoveRange(0, header.TotalLength);               // 제거
+                            }
+                            var message = Message.ParseByte(fullMessage);
+                            Console.WriteLine($"from a: {message.Payload.Text}");
+
+                            //_ = BroadCast(message.Payload.Text);
                         }
-                        var message = Message.Deserialize(data);
-                        Console.WriteLine($"from a: {message.Payload.Text}");
-                        _ = BroadCast(message.Payload.Text);
                     }
                 }
             }
         }
 
-        static async Task BroadCast(string text)
+
+        static void BroadCast(string text)
         {
             Message message = new(Message.TEXT, text.Length, 0, text);
             List<Socket> clients;
@@ -211,10 +222,10 @@ namespace ChattingServer
             {
                 clients = new List<Socket>(sockets);
             }
-                foreach (var c in clients)
-                {
-                    c.SendAsync(Message.Serialize(message));
-                }
+            foreach (var c in clients)
+            {
+                _ = c.SendAsync(message.ToBytes());
+            }
         }
     }
 }

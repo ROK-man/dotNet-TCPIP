@@ -16,10 +16,37 @@ namespace ChattingServer
 
         public const int HEADERLENGTH = 20;
 
+        public Message(MessageHeader header, MessagePayload payload)
+        {
+            Message message = new Message(header, payload);
+            message.Header = header;
+            message.Payload = payload;
+        }
+
         public Message(int protocol, int textLength, int userID, string text)
         {
             this.Payload = new MessagePayload(text);
             this.Header = new MessageHeader(protocol, textLength + 20, GetCheckSum(Payload.Text), userID);
+        }
+
+        public byte[] ToBytes()
+        {
+            List<byte> data = new List<byte>();
+            data.AddRange(Header.ToBytes());
+            data.AddRange(Payload.ToBytes());
+
+            return data.ToArray();
+        }
+
+        public static Message ParseByte(byte[] data)
+        {
+            MessageHeader header = MessageHeader.ParseByte(data);
+            MessagePayload payload = MessagePayload.ParseByte(data, 20, header.TotalLength);
+
+
+            Message message = new(header, payload);
+
+            return message;
         }
 
         public bool CheckHeader()
@@ -32,20 +59,7 @@ namespace ChattingServer
             return this.Header.CheckSum == GetCheckSum(this.Payload.Text);
         }
 
-        public static byte[] Serialize(object m)
-        {
-            var jsonData = JsonSerializer.SerializeToUtf8Bytes(m);
-            var lengthBytes = BitConverter.GetBytes(jsonData.Length);
-            return lengthBytes.Concat(jsonData).ToArray(); // 헤더(4바이트) + JSON 데이터
-        }
-        public static Message Deserialize(byte[] data)
-        {
-            return JsonSerializer.Deserialize<Message>(data);
-        }
-        public static MessageHeader DeserializeHeader(byte[] data)
-        {
-            return JsonSerializer.Deserialize<MessageHeader>(data);
-        }
+
 
         private static int GetCheckSum(string text)
         {
@@ -72,7 +86,7 @@ namespace ChattingServer
         public int TotalLength;
         public int CheckSum;
         public int UserID;
-        private const int Key = 0x12345678;
+        public int Key;
 
         public MessageHeader(int protocol, int length, int sum, int userID)
         {
@@ -80,18 +94,57 @@ namespace ChattingServer
             TotalLength = length;
             CheckSum = sum;
             UserID = userID;
+            Key = 0x12345678;
         }
 
+        // 유효성 검사
         public bool IsHeader()
         {
             return Key == 0x12345678;
         }
+
+        public byte[] ToBytes()
+        {
+            List<byte> data = new List<byte>();
+            data.AddRange(BitConverter.GetBytes(Protocol));
+            data.AddRange(BitConverter.GetBytes(TotalLength));
+            data.AddRange(BitConverter.GetBytes(CheckSum));
+            data.AddRange(BitConverter.GetBytes(UserID));
+            data.AddRange(BitConverter.GetBytes(Key));
+
+            return data.ToArray();
+        }
+
+        public static MessageHeader ParseByte(byte[] data)
+        {
+            MessageHeader header = new MessageHeader
+            {
+                Protocol = BitConverter.ToInt32(data, 0),        // 0~3: Protocol
+                TotalLength = BitConverter.ToInt32(data, 4),     // 4~7: TotalLength
+                CheckSum = BitConverter.ToInt32(data, 8),        // 8~11: CheckSum
+                UserID = BitConverter.ToInt32(data, 12),         // 12~15: UserID
+                Key = BitConverter.ToInt32(data, 16)             // 16~19: Key
+            };
+
+            return header;
+        }
     }
+
 
 
     class MessagePayload(string text)
     {
         public string Text { get; set; } = text;
+
+        public byte[] ToBytes()
+        {
+            return Encoding.UTF8.GetBytes(this.Text);
+        }
+
+        public static MessagePayload ParseByte(byte[] data, int index, int count)
+        {
+            return new MessagePayload(Encoding.UTF8.GetString(data, index, count));
+        }
     }
 
 

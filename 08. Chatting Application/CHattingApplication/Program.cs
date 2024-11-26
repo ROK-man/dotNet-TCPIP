@@ -40,7 +40,7 @@ namespace ChattingApplication
                 else
                 {
                     Message message = new(Message.TEXT, input.Length, 0, input.ToString());
-                    client.Send(Message.Serialize(message));
+                    client.Send(message.ToBytes());
                 }
             }
         }
