@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using DLL;
+using Data;
 
 namespace ChattingApplication
 {
@@ -12,7 +12,7 @@ namespace ChattingApplication
             {
                 Console.WriteLine("s to connect server");
                 Console.WriteLine("q to terminate program");
-                var input = Console.ReadLine();
+                var input = Console.ReadLine() ?? "";
                 if(input.Equals("q"))
                 {
                     break;
@@ -31,13 +31,13 @@ namespace ChattingApplication
 
             while(true)
             {
-                var input = Console.ReadLine();
+                var input = Console.ReadLine() ?? "";
                 if(input.Equals("exit"))
                 {
                     client.Close();
                     break;
                 }
-                else
+                else if (input.Length > 0)
                 {
                     Message message = new(Message.TEXT, input.Length, 0, input.ToString());
                     client.Send(message.ToBytes());

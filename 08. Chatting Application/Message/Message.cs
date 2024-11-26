@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace DLL
+namespace Data
 {
     // Message 클래스 정의
     public class Message

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using DLL;
+using Data;
 
 namespace ChattingServer
 {
@@ -9,8 +9,8 @@ namespace ChattingServer
         static object lcs = new();
         static object bcs = new();
         static Socket serverSocket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        static List<Socket> sockets = new List<Socket>();
-        static List<byte> buffer = new List<byte>();
+        static List<Socket> sockets = new();
+        static List<byte> buffer = new();
         static void Main(string[] args)
         {
             Console.WriteLine("Enter \"START\" for running server");
