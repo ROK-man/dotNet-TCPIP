@@ -7,7 +7,7 @@ namespace DLL
     {
         public static readonly int ERROR = -1;
         public static readonly int TEXT = 0;
-        public static readonly int GETFILELIST = 50;
+        public static readonly int GETID = 50;
         public static readonly int GETFILE = 100;
 
         public MessageHeader Header;
