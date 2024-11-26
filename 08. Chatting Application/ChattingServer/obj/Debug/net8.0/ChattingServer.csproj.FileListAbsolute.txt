@@ -1,0 +1,15 @@
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\bin\Debug\net8.0\ChattingServer.exe
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\bin\Debug\net8.0\ChattingServer.deps.json
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\bin\Debug\net8.0\ChattingServer.runtimeconfig.json
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\bin\Debug\net8.0\ChattingServer.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\bin\Debug\net8.0\ChattingServer.pdb
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.AssemblyInfoInputs.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.AssemblyInfo.cs
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.csproj.CoreCompileInputs.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.sourcelink.json
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\refint\ChattingServer.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.pdb
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.genruntimeconfig.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ref\ChattingServer.dll
