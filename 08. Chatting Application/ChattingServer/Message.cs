@@ -25,7 +25,7 @@ namespace ChattingServer
         public Message(int protocol, int textLength, int userID, string text)
         {
             this.Payload = new MessagePayload(text);
-            this.Header = new MessageHeader(protocol, textLength, GetCheckSum(Payload.Text), userID);
+            this.Header = new MessageHeader(protocol, textLength + 20, GetCheckSum(Payload.Text), userID);
         }
 
         public byte[] ToBytes()
