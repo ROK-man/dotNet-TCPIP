@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
+using System.Text.Json;
 
 namespace ChattingServer
 {
@@ -36,9 +32,24 @@ namespace ChattingServer
             return this.Header.CheckSum == GetCheckSum(this.Payload.Text);
         }
 
+        public static byte[] Serialize(object m)
+        {
+            var jsonData = JsonSerializer.SerializeToUtf8Bytes(m);
+            var lengthBytes = BitConverter.GetBytes(jsonData.Length);
+            return lengthBytes.Concat(jsonData).ToArray(); // 헤더(4바이트) + JSON 데이터
+        }
+        public static Message Deserialize(byte[] data)
+        {
+            return JsonSerializer.Deserialize<Message>(data);
+        }
+        public static MessageHeader DeserializeHeader(byte[] data)
+        {
+            return JsonSerializer.Deserialize<MessageHeader>(data);
+        }
+
         private static int GetCheckSum(string text)
         {
-            if(String.IsNullOrEmpty(text))
+            if (String.IsNullOrEmpty(text))
             {
                 return 0;
             }
@@ -55,7 +66,7 @@ namespace ChattingServer
     }
 
     // 크기가 20바이트 고정인 구조체
-    struct MessageHeader
+    public struct MessageHeader
     {
         public int Protocol;
         public int TotalLength;

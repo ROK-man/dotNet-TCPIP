@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    public class ProtocolMessage
+    public class Message
     {
-        public int CommandType { get; set; }  // 1=메시지, 2=파일 리스트 요청, 3=파일 요청
+        public int Protocol { get; set; }  // 1=메시지, 2=파일 리스트 요청, 3=파일 요청
         public int FileIndex { get; set; }   // 파일 인덱스 (파일 요청 시 사용)
-        public string Message { get; set; }  // 메시지 내용 (메시지 전송 시 사용)
+        public string Payload { get; set; }  // 메시지 내용 (메시지 전송 시 사용)
 
-        public static byte[] Serialize(ProtocolMessage obj)
+        public static byte[] Serialize(Message obj)
         {
             var jsonData = JsonSerializer.SerializeToUtf8Bytes(obj);
             var lengthBytes = BitConverter.GetBytes(jsonData.Length);
             return lengthBytes.Concat(jsonData).ToArray(); // 헤더(4바이트) + JSON 데이터
         }
 
-        public static ProtocolMessage Deserialize(byte[] data)
+        public static Message Deserialize(byte[] data)
         {
-            return JsonSerializer.Deserialize<ProtocolMessage>(data);
+            return JsonSerializer.Deserialize<Message>(data);
         }
     }
 
@@ -49,23 +49,23 @@ namespace Client
                     if (input?.ToLower() == "exit")
                         break;
 
-                    var message = new ProtocolMessage();
+                    var message = new Message();
 
                     switch (input)
                     {
                         case "1": // 메시지 보내기
                             Console.Write("Enter message: ");
-                            message.CommandType = 1;
-                            message.Message = Console.ReadLine();
+                            message.Protocol = 1;
+                            message.Payload = Console.ReadLine();
                             break;
 
                         case "2": // 파일 목록 요청
-                            message.CommandType = 2;
+                            message.Protocol = 2;
                             break;
 
                         case "3": // 파일 다운로드 요청
                             Console.Write("Enter file index: ");
-                            message.CommandType = 3;
+                            message.Protocol = 3;
                             if (int.TryParse(Console.ReadLine(), out int fileIndex))
                             {
                                 message.FileIndex = fileIndex;
@@ -82,7 +82,7 @@ namespace Client
                             continue;
                     }
 
-                    byte[] buffer = ProtocolMessage.Serialize(message);
+                    byte[] buffer = Message.Serialize(message);
                     await clientSocket.SendAsync(buffer, SocketFlags.None);
                 }
             }
@@ -118,7 +118,7 @@ namespace Client
                         var messageData = buffer.Skip(4).Take(messageLength).ToArray();
                         buffer.RemoveRange(0, 4 + messageLength);
 
-                        var message = ProtocolMessage.Deserialize(messageData);
+                        var message = Message.Deserialize(messageData);
 
                         await ProcessMessage(clientSocket, message);
                     }
@@ -130,22 +130,22 @@ namespace Client
             }
         }
 
-        private static async Task ProcessMessage(Socket clientSocket, ProtocolMessage message)
+        private static async Task ProcessMessage(Socket clientSocket, Message message)
         {
-            switch (message.CommandType)
+            switch (message.Protocol)
             {
                 case 1: // 일반 메시지
-                    Console.WriteLine($"Server Message: {message.Message}");
+                    Console.WriteLine($"Server Message: {message.Payload}");
                     break;
 
                 case 2: // 파일 리스트
                     Console.WriteLine("File List:");
-                    Console.WriteLine(message.Message);
+                    Console.WriteLine(message.Payload);
                     break;
 
                 case 3: // 파일 데이터
-                    Console.WriteLine($"Receiving file: {message.Message}");
-                    await SaveFile(clientSocket, message.Message);
+                    Console.WriteLine($"Receiving file: {message.Payload}");
+                    await SaveFile(clientSocket, message.Payload);
                     break;
 
                 default:

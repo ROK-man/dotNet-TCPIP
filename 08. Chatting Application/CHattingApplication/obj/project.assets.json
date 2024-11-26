@@ -8,23 +8,23 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Code\\.nuget\\packages\\": {},
+    "C:\\Users\\ROKman\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\CHattingApplication\\CHattingApplication.csproj",
-      "projectName": "CHattingApplication",
-      "projectPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\CHattingApplication\\CHattingApplication.csproj",
-      "packagesPath": "C:\\Users\\Code\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\CHattingApplication\\obj\\",
+      "projectUniqueName": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\ChattingApplication\\ChattingApplication.csproj",
+      "projectName": "ChattingApplication",
+      "projectPath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\ChattingApplication\\ChattingApplication.csproj",
+      "packagesPath": "C:\\Users\\ROKman\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ROKman\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\ChattingApplication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Code\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ROKman\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -49,8 +49,9 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "direct"
-      }
+        "auditMode": "all"
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -71,7 +72,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

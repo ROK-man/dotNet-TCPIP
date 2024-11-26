@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace FileServer
 {
-    public class ProtocolMessage
+    public class Message
     {
-        public int CommandType { get; set; }  // 1=메시지, 2=파일 리스트 요청, 3=파일 요청
+        public int Protocol { get; set; }  // 1=메시지, 2=파일 리스트 요청, 3=파일 요청
         public int FileIndex { get; set; }   // 파일 인덱스 (파일 요청 시 사용)
-        public string Message { get; set; }  // 메시지 내용 (메시지 전송 시 사용)
+        public string Payload { get; set; }  // 메시지 내용 (메시지 전송 시 사용)
 
-        public static byte[] Serialize(ProtocolMessage obj)
+        public static byte[] Serialize(Message obj)
         {
             var jsonData = JsonSerializer.SerializeToUtf8Bytes(obj);
             var lengthBytes = BitConverter.GetBytes(jsonData.Length);
             return lengthBytes.Concat(jsonData).ToArray(); // 헤더(4바이트) + JSON 데이터
         }
 
-        public static ProtocolMessage Deserialize(byte[] data)
+        public static Message Deserialize(byte[] data)
         {
-            return JsonSerializer.Deserialize<ProtocolMessage>(data);
+            return JsonSerializer.Deserialize<Message>(data);
         }
     }
 
@@ -81,7 +81,7 @@ namespace FileServer
                         var messageData = buffer.Skip(4).Take(messageLength).ToArray();
                         buffer.RemoveRange(0, 4 + messageLength);
 
-                        var message = ProtocolMessage.Deserialize(messageData);
+                        var message = Message.Deserialize(messageData);
                         await ProcessMessage(clientSocket, message);
                     }
                 }
@@ -96,13 +96,13 @@ namespace FileServer
             }
         }
 
-        private static async Task ProcessMessage(Socket clientSocket, ProtocolMessage message)
+        private static async Task ProcessMessage(Socket clientSocket, Message message)
         {
-            switch (message.CommandType)
+            switch (message.Protocol)
             {
                 case 1: // 메시지 브로드캐스트
-                    Console.WriteLine($"Message from {clientSocket.RemoteEndPoint}: {message.Message}");
-                    BroadcastMessage(message.Message, clientSocket);
+                    Console.WriteLine($"Message from {clientSocket.RemoteEndPoint}: {message.Payload}");
+                    BroadcastMessage(message.Payload, clientSocket);
                     break;
 
                 case 2: // 파일 리스트 요청
@@ -121,8 +121,8 @@ namespace FileServer
 
         private static void BroadcastMessage(string message, Socket excludeClient)
         {
-            var broadcastMessage = new ProtocolMessage { CommandType = 1, Message = message };
-            byte[] buffer = ProtocolMessage.Serialize(broadcastMessage);
+            var broadcastMessage = new Message { Protocol = 1, Payload = message };
+            byte[] buffer = Message.Serialize(broadcastMessage);
 
             lock (Clients)
             {
@@ -148,8 +148,8 @@ namespace FileServer
             var files = Directory.GetFiles(FilesDirectory);
             var fileList = string.Join(Environment.NewLine, files.Select((f, i) => $"{i}: {Path.GetFileName(f)}"));
 
-            var response = new ProtocolMessage { CommandType = 2, Message = fileList };
-            await clientSocket.SendAsync(ProtocolMessage.Serialize(response), SocketFlags.None);
+            var response = new Message { Protocol = 2, Payload = fileList };
+            await clientSocket.SendAsync(Message.Serialize(response), SocketFlags.None);
         }
 
         private static async Task SendFile(Socket clientSocket, int fileIndex)
@@ -158,8 +158,8 @@ namespace FileServer
 
             if (fileIndex < 0 || fileIndex >= files.Length)
             {
-                var error = new ProtocolMessage { CommandType = 1, Message = "Invalid file index." };
-                await clientSocket.SendAsync(ProtocolMessage.Serialize(error), SocketFlags.None);
+                var error = new Message { Protocol = 1, Payload = "Invalid file index." };
+                await clientSocket.SendAsync(Message.Serialize(error), SocketFlags.None);
                 return;
             }
 
@@ -167,8 +167,8 @@ namespace FileServer
             string fileName = Path.GetFileName(filePath);
             byte[] fileData = File.ReadAllBytes(filePath);
 
-            var startMessage = new ProtocolMessage { CommandType = 3, Message = fileName };
-            await clientSocket.SendAsync(ProtocolMessage.Serialize(startMessage), SocketFlags.None);
+            var startMessage = new Message { Protocol = 3, Payload = fileName };
+            await clientSocket.SendAsync(Message.Serialize(startMessage), SocketFlags.None);
 
             await clientSocket.SendAsync(fileData, SocketFlags.None);
             Console.WriteLine($"File {fileName} sent successfully.");
