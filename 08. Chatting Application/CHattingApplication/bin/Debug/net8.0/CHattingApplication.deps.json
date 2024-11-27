@@ -7,14 +7,30 @@
   "targets": {
     ".NETCoreApp,Version=v8.0": {
       "ChattingApplication/1.0.0": {
+        "dependencies": {
+          "Message": "1.0.0"
+        },
         "runtime": {
           "ChattingApplication.dll": {}
+        }
+      },
+      "Message/1.0.0": {
+        "runtime": {
+          "Message.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
   },
   "libraries": {
     "ChattingApplication/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Message/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

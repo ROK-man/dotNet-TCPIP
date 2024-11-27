@@ -1,0 +1,12 @@
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\bin\Debug\net8.0\Message.deps.json
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\bin\Debug\net8.0\Message.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\bin\Debug\net8.0\Message.pdb
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Debug\net8.0\Message.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Debug\net8.0\Message.AssemblyInfoInputs.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Debug\net8.0\Message.AssemblyInfo.cs
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Debug\net8.0\Message.csproj.CoreCompileInputs.cache
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Debug\net8.0\Message.sourcelink.json
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Debug\net8.0\Message.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Debug\net8.0\refint\Message.dll
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Debug\net8.0\Message.pdb
+C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\Message\obj\Debug\net8.0\ref\Message.dll
