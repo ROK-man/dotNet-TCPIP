@@ -10,6 +10,8 @@ namespace ChattingApplication
         private static readonly Queue<Message> messageQ = new();
         static readonly object cs = new();
 
+        static int ID;
+
 
         static readonly Queue<byte> dataQ = new();
 
@@ -55,7 +57,7 @@ namespace ChattingApplication
                     for (int i = 0; i < 100; ++i)
                     {
 
-                        Message message = new(Message.TEXT, 0, "ㅋㅋㅋzzz");
+                        Message message = new(Message.TEXT, ID, "ㅋㅋㅋzzz");
                         lock (cs)
                         {
                             messageQ.Enqueue(message);
@@ -69,7 +71,7 @@ namespace ChattingApplication
                         Console.WriteLine(dataQ.Count);
                     }
                     if (input.Equals("")) input = "abcㅁㄴㅇ";
-                    Message message = new(Message.TEXT, 0, input.ToString());
+                    Message message = new(Message.TEXT, ID, input.ToString());
                     lock (cs)
                     {
                         messageQ.Enqueue(message);
@@ -107,7 +109,6 @@ namespace ChattingApplication
                     if (client.Connected)
                     {
                         var receiveBytes = await client.ReceiveAsync(buffer);
-                        Console.WriteLine("1");
 
                         // 연결이 정상적으로 종료된 경우
                         if (receiveBytes == 0)
@@ -188,10 +189,6 @@ namespace ChattingApplication
                                 }
                             }
                         }
-                        else
-                        {
-                            Console.WriteLine("Header right");
-                        }
 
                         int temp = 0;
                         while (!(dataQ.Count < message.Header.TotalLength - Message.HEADERLENGTH))
@@ -213,14 +210,27 @@ namespace ChattingApplication
 
                         if (message.Header.Protocol == Message.TEXT)
                         {
-                            for (int i = Message.HEADERLENGTH; i < message.Header.TotalLength; ++i)
+                            lock (cs)
                             {
-                                buffer[i] = dataQ.Dequeue();
+                                for (int i = Message.HEADERLENGTH; i < message.Header.TotalLength; ++i)
+                                {
+                                    buffer[i] = dataQ.Dequeue();
+                                }
                             }
 
                             Message m = Message.ParseByte(buffer);
 
-                            Console.WriteLine("Server: " + m.Payload.Text);
+                            Console.WriteLine($"{m.Header.UserID}: " + m.Payload.Text);
+                        }
+                        else if (message.Header.Protocol == Message.GETID)
+                        {
+                            for (int i = Message.HEADERLENGTH; i < message.Header.TotalLength; ++i)
+                            {
+                                buffer[i] = dataQ.Dequeue();
+                            }
+                            Message m = Message.ParseByte(buffer);
+                            ID = m.Header.UserID;
+                            Console.WriteLine($"My ID: {ID}");
                         }
                     }
                 }

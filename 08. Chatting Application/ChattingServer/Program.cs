@@ -12,6 +12,8 @@ namespace ChattingServer
         static readonly object cs = new();
         static Queue<byte> dataQ = new();
 
+        static int NextID = 1;
+
         // 서버 동작 처리
         static void Main(string[] args)
         {
@@ -106,6 +108,8 @@ namespace ChattingServer
                 lock (cs)
                 {
                     sockets.Add(client);
+                    Message message = new(Message.GETID, NextID++, "NULL");
+                    client.Send(message.ToBytes());
                 }
                 _ = Task.Run(() => StartReceive(client));
                 _ = Task.Run(() => ProcessMessageAsync());

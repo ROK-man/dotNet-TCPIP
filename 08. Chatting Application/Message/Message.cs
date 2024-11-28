@@ -29,6 +29,10 @@ namespace Data
 
         public byte[] ToBytes()
         {
+            if(Payload == null)
+            {
+                Payload.Text = "NULL";
+            }
             byte[] payloadBytes = Payload.ToBytes();
 
             this.Header.TotalLength = payloadBytes.Length + Message.HEADERLENGTH;
