@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\ChattingApplication\\ChattingApplication.csproj": {}
+    "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\CHattingApplication\\ChattingApplication.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\ChattingApplication\\ChattingApplication.csproj": {
+    "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\CHattingApplication\\ChattingApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\ChattingApplication\\ChattingApplication.csproj",
+        "projectUniqueName": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\CHattingApplication\\ChattingApplication.csproj",
         "projectName": "ChattingApplication",
-        "projectPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\ChattingApplication\\ChattingApplication.csproj",
+        "projectPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\CHattingApplication\\ChattingApplication.csproj",
         "packagesPath": "C:\\Users\\Code\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Code\\Desktop\\dotNet-TCPIP\\08. Chatting Application\\ChattingApplication\\obj\\",
         "projectStyle": "PackageReference",

@@ -182,7 +182,6 @@ namespace ChattingServer
                     lock (buffer)
                     {
                         headerData = buffer.Take(Message.HEADERLENGTH).ToArray(); // 복사
-                                                                                  //buffer.RemoveRange(0, Message.HEADERLENGTH);             // 제거
                     }
 
                     // 2. 헤더 파싱
@@ -207,7 +206,7 @@ namespace ChattingServer
                             var message = Message.ParseByte(fullMessage);
                             Console.WriteLine($"from {message.Header.UserID}: {message.Payload.Text}");
 
-                            //_ = BroadCast(message.Payload.Text);
+                            _ = Task.Run(() => BroadCast(message));
                         }
                     }
                 }
@@ -215,9 +214,8 @@ namespace ChattingServer
         }
 
 
-        static void BroadCast(string text)
+        static void BroadCast(Message message)
         {
-            Message message = new(Message.TEXT, text.Length, 0, text);
             List<Socket> clients;
             lock (lcs)
             {
