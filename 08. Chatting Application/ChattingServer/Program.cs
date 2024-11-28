@@ -1,18 +1,22 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using Data;
 
 namespace ChattingServer
 {
     internal class Program
     {
-        static object lcs = new();
-        static object bcs = new();
         static Socket serverSocket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         static List<Socket> sockets = new();
-        static List<byte> buffer = new();
+        static readonly object cs = new();
+        static Queue<byte> dataQ = new();
+
+        // 서버 동작 처리
         static void Main(string[] args)
         {
+            Console.InputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
             Console.WriteLine("Enter \"START\" for running server");
             Console.WriteLine("Enter \"STOP\" for terminate server");
             Console.WriteLine("Enter \"CHECK\" for see how many people connected");
@@ -57,6 +61,7 @@ namespace ChattingServer
             }
         }
 
+        // 서버 리스닝 시작
         static void AcceptConnect()
         {
             try
@@ -72,6 +77,7 @@ namespace ChattingServer
             _ = Task.Run(() => ServerAccept());
         }
 
+        // 클라이언트 접속 시작
         static void ServerAccept()
         {
             var acceptEventArg = new SocketAsyncEventArgs();
@@ -83,6 +89,7 @@ namespace ChattingServer
             }
         }
 
+        // 클라이언트 접속 처리
         static void AcceptCompleted(object sender, SocketAsyncEventArgs e)
         {
             if (e.SocketError == SocketError.Success)
@@ -96,17 +103,18 @@ namespace ChattingServer
                 }
 
                 Console.WriteLine($"New Client connected. {client.RemoteEndPoint}");
-                lock (lcs)
+                lock (cs)
                 {
                     sockets.Add(client);
                 }
                 _ = Task.Run(() => StartReceive(client));
-                _ = Task.Run(() => ProcessMessage());
+                _ = Task.Run(() => ProcessMessageAsync());
 
                 ServerAccept();
             }
         }
 
+        // 클라이언트 메시지 수신 시작
         static void StartReceive(Socket client)
         {
             var receiveEventArg = new SocketAsyncEventArgs();
@@ -124,6 +132,7 @@ namespace ChattingServer
             }
         }
 
+        // 클라이언트 메시지 수신 처리
         static void ReceiveCompleted(object sender, SocketAsyncEventArgs e)
         {
             if (e.Buffer == null)
@@ -139,7 +148,7 @@ namespace ChattingServer
                 if (e.BytesTransferred == 0)
                 {
                     Console.WriteLine($"{client.RemoteEndPoint} disconnected");
-                    lock (lcs)
+                    lock (cs)
                     {
                         sockets.Remove(client);
                     }
@@ -151,9 +160,9 @@ namespace ChattingServer
                 {
                     for (int i = 0; i < e.BytesTransferred; ++i)
                     {
-                        lock (bcs)
+                        lock (cs)
                         {
-                            buffer.Add(e.Buffer[i]);
+                            dataQ.Enqueue(e.Buffer[i]);
                         }
                     }
                     StartReceive(client);
@@ -162,7 +171,7 @@ namespace ChattingServer
             else
             {
                 Console.WriteLine($"Socket error: {e.SocketError}");
-                lock (lcs)
+                lock (cs)
                 {
                     sockets.Remove(client);
                 }
@@ -170,44 +179,77 @@ namespace ChattingServer
             }
         }
 
-        static void ProcessMessage()
+        static async Task ProcessMessageAsync()
         {
             while (true)
             {
                 // 헤더 길이만큼 데이터를 처리할 수 있는지 확인
-                if (buffer.Count > Message.HEADERLENGTH) // 값 확인만 할거라 lock 안 걸었음
+                if (dataQ.Count > Message.HEADERLENGTH) // 값 확인만 할거라 lock 안 걸었음
                 {
                     // 1. buffer에서 HEADERLENGTH만큼 데이터를 가져옴
-                    byte[] headerData;
-                    lock (buffer)
+                    byte[] buffer = new byte[4096];
+                    lock (cs)
                     {
-                        headerData = buffer.Take(Message.HEADERLENGTH).ToArray(); // 복사
+                        for (int i = 0; i < Message.HEADERLENGTH; ++i)
+                        {
+                            buffer[i] = dataQ.Dequeue();
+                        }
                     }
 
                     // 2. 헤더 파싱
-                    MessageHeader header = MessageHeader.ParseByte(headerData);
-                    if (!header.IsHeader())
+                    Message message = Message.ParseByteToHeader(buffer);
+
+                    // 헤더 검증 실패시
+                    if (!message.IsHeaderVaild())
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Something very wrong");
+                        lock (cs)
+                        {
+                            dataQ.Clear();
+                        }
                         continue;
                     }
 
                     // 3. 메시지의 총 길이를 확인하고, 메시지를 처리
-                    if (header.Protocol == Message.TEXT)
+                    if (message.Header.Protocol == Message.TEXT)
                     {
-                        if (buffer.Count >= header.TotalLength)
+                        int temp = 0;
+                        while (!(dataQ.Count < message.Header.TotalLength - Message.HEADERLENGTH))
                         {
-                            byte[] fullMessage;
-                            lock (buffer)
+                            lock (cs)
                             {
-                                fullMessage = buffer.Take(header.TotalLength).ToArray(); // 복사
-                                buffer.RemoveRange(0, header.TotalLength);               // 제거
+                                if (dataQ.Count >= message.Header.TotalLength - Message.HEADERLENGTH)
+                                {
+                                    break;
+                                }
                             }
-                            var message = Message.ParseByte(fullMessage);
+                            await Task.Delay(10); // 10ms 대기
+                            ++temp;
+                            if(temp > 10)
+                            {
+                                break;
+                            }
+                        }
+                        if (dataQ.Count >= message.Header.TotalLength - Message.HEADERLENGTH)
+                        {
+                            lock (cs)
+                            {
+                                for (int i = Message.HEADERLENGTH; i < message.Header.TotalLength; ++i)
+                                {
+                                    buffer[i] = dataQ.Dequeue();
+                                }
+                            }
+                            message = Message.ParseByte(buffer);
                             Console.WriteLine($"from {message.Header.UserID}: {message.Payload.Text}");
 
                             _ = Task.Run(() => BroadCast(message));
                         }
+                    }
+                    // 다른 프로토콜 처리
+                    else
+                    {
+                        continue;
                     }
                 }
             }
@@ -216,14 +258,17 @@ namespace ChattingServer
 
         static void BroadCast(Message message)
         {
-            List<Socket> clients;
-            lock (lcs)
+            lock (cs)
             {
-                clients = new List<Socket>(sockets);
-            }
-            foreach (var c in clients)
-            {
-                _ = c.SendAsync(message.ToBytes());
+                List<Socket> clients;
+                lock (cs)
+                {
+                    clients = new List<Socket>(sockets);
+                }
+                foreach (var c in clients)
+                {
+                    _ = c.SendAsync(message.ToBytes());
+                }
             }
         }
     }

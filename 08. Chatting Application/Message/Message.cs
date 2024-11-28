@@ -21,16 +21,20 @@ namespace Data
             this.Payload = payload;
         }
 
-        public Message(int protocol, int textLength, int userID, string text)
+        public Message(int protocol, int userID, string text)
         {
             this.Payload = new MessagePayload(text);
-            this.Header = new MessageHeader(protocol, textLength + HEADERLENGTH, GetCheckSum(Payload.Text), userID);
+            this.Header = new MessageHeader(protocol, userID);
         }
 
         public byte[] ToBytes()
         {
-            byte[] headerBytes = Header.ToBytes();
             byte[] payloadBytes = Payload.ToBytes();
+
+            this.Header.TotalLength = payloadBytes.Length + Message.HEADERLENGTH;
+            Header.CheckSum = Message.GetCheckSum(this.Payload.Text);
+
+            byte[] headerBytes = Header.ToBytes();
 
             byte[] data = new byte[headerBytes.Length + payloadBytes.Length];
             Buffer.BlockCopy(headerBytes, 0, data, 0, headerBytes.Length);
@@ -45,6 +49,18 @@ namespace Data
             MessagePayload payload = MessagePayload.ParseByte(data, 20, header.TotalLength - 20);
 
             return new Message(header, payload);
+        }
+
+        public static Message ParseByteToHeader(byte[] data)
+        {
+            MessageHeader header = MessageHeader.ParseByte(data);
+
+            return new Message(header, null);
+        }
+
+        public bool IsHeaderVaild()
+        {
+            return this.Header.IsHeader();
         }
 
         public bool CheckHeader()
@@ -79,16 +95,14 @@ namespace Data
     public struct MessageHeader
     {
         public int Protocol;
+        public int UserID;
         public int TotalLength;
         public int CheckSum;
-        public int UserID;
         public int Key;
 
-        public MessageHeader(int protocol, int length, int sum, int userID)
+        public MessageHeader(int protocol, int userID)
         {
             Protocol = protocol;
-            TotalLength = length;
-            CheckSum = sum;
             UserID = userID;
             Key = 0x12345678;
         }
@@ -100,7 +114,7 @@ namespace Data
 
         public byte[] ToBytes()
         {
-            List<byte> data = new List<byte>();
+            List<byte> data = new();
             data.AddRange(BitConverter.GetBytes(Protocol));
             data.AddRange(BitConverter.GetBytes(TotalLength));
             data.AddRange(BitConverter.GetBytes(CheckSum));

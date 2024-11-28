@@ -32,3 +32,7 @@ C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\bin\D
 C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\bin\Debug\net8.0\Message.pdb
 C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.csproj.AssemblyReference.cache
 C:\Users\Code\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\Chatting.6ADAD46F.Up2Date
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\bin\Debug\net8.0\Message.dll
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\bin\Debug\net8.0\Message.pdb
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\ChattingServer.csproj.AssemblyReference.cache
+C:\Users\ROKman\Desktop\dotNet-TCPIP\08. Chatting Application\ChattingServer\obj\Debug\net8.0\Chatting.6ADAD46F.Up2Date

@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using Data;
 
 namespace ChattingApplication
@@ -8,13 +9,14 @@ namespace ChattingApplication
     {
         private static readonly Queue<Message> messageQ = new();
         static readonly object cs = new();
-        static readonly object ls = new();
 
 
         static readonly Queue<byte> dataQ = new();
 
         static async Task Main(string[] args)
         {
+            Console.InputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
             while (true)
             {
                 Console.WriteLine("s to connect server");
@@ -35,8 +37,9 @@ namespace ChattingApplication
         {
             Socket client = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             await client.ConnectAsync(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25000));
+            Console.WriteLine($"Server Connected {client.RemoteEndPoint}");
             _ = Task.Run(() => Send(client));
-            _ = Task.Run(() => ProcessData(client));
+            _ = Task.Run(() => ProcessDataAsync(client));
             _ = Task.Run(() => Receive(client));
 
             while (true)
@@ -47,9 +50,26 @@ namespace ChattingApplication
                     client.Close();
                     break;
                 }
+                else if (input.Length == 0)
+                {
+                    for (int i = 0; i < 100; ++i)
+                    {
+
+                        Message message = new(Message.TEXT, 0, "ㅋㅋㅋzzz");
+                        lock (cs)
+                        {
+                            messageQ.Enqueue(message);
+                        }
+                    }
+                }
                 else if (input.Length > 0)
                 {
-                    Message message = new(Message.TEXT, input.Length, 0, input.ToString());
+                    if (input.Equals("check"))
+                    {
+                        Console.WriteLine(dataQ.Count);
+                    }
+                    if (input.Equals("")) input = "abcㅁㄴㅇ";
+                    Message message = new(Message.TEXT, 0, input.ToString());
                     lock (cs)
                     {
                         messageQ.Enqueue(message);
@@ -79,7 +99,7 @@ namespace ChattingApplication
 
         static async void Receive(Socket client)
         {
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[4096];
             while (true)
             {
                 try
@@ -87,6 +107,7 @@ namespace ChattingApplication
                     if (client.Connected)
                     {
                         var receiveBytes = await client.ReceiveAsync(buffer);
+                        Console.WriteLine("1");
 
                         // 연결이 정상적으로 종료된 경우
                         if (receiveBytes == 0)
@@ -98,7 +119,7 @@ namespace ChattingApplication
                         // 받은 데이터를 큐에 추가
                         for (int i = 0; i < receiveBytes; ++i)
                         {
-                            lock (ls)
+                            lock (cs)
                             {
                                 dataQ.Enqueue(buffer[i]);
                             }
@@ -125,38 +146,88 @@ namespace ChattingApplication
         }
 
 
-        static void ProcessData(Socket client)
+        static async Task ProcessDataAsync(Socket client)
         {
             byte[] buffer = new byte[4096];
-            while (client.Connected)
+            try
             {
-                if (!client.Connected)
+                while (client.Connected)
                 {
-                    return;
-                }
-                if (dataQ.Count > Message.HEADERLENGTH)
-                {
-                    lock (ls)
+                    if (!client.Connected)
                     {
-                        for (int i = 0; i < Message.HEADERLENGTH; ++i)
-                        {
-                            buffer[i] = dataQ.Dequeue();
-                        }
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("??");
+                        return;
                     }
 
-                    MessageHeader header = MessageHeader.ParseByte(buffer);
-                    if (header.Protocol == Message.TEXT && header.IsHeader())
+                    if (dataQ.Count > Message.HEADERLENGTH)
                     {
-                        for (int i = Message.HEADERLENGTH; i < header.TotalLength; ++i)
+                        lock (cs)
                         {
-                            buffer[i] = dataQ.Dequeue();
+                            for (int i = 0; i < Message.HEADERLENGTH; ++i)
+                            {
+                                buffer[i] = dataQ.Dequeue();
+                            }
                         }
 
-                        Message m = Message.ParseByte(buffer);
+                        Message message = Message.ParseByteToHeader(buffer);
 
-                        Console.WriteLine("Server: " + m.Payload.Text);
+                        if (!message.IsHeaderVaild())
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Fail to ProcessData...");
+                            lock (cs)
+                            {
+                                lock (cs)
+                                {
+                                    while (dataQ.Count != 0)
+                                    {
+                                        var m = dataQ.Dequeue();
+                                        Console.Write($"{m}\t");
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Header right");
+                        }
+
+                        int temp = 0;
+                        while (!(dataQ.Count < message.Header.TotalLength - Message.HEADERLENGTH))
+                        {
+                            lock (cs)
+                            {
+                                if (dataQ.Count >= message.Header.TotalLength - Message.HEADERLENGTH)
+                                {
+                                    break;
+                                }
+                            }
+                            await Task.Delay(10); // 10ms 대기
+                            ++temp;
+                            if (temp > 10)
+                            {
+                                break;
+                            }
+                        }
+
+                        if (message.Header.Protocol == Message.TEXT)
+                        {
+                            for (int i = Message.HEADERLENGTH; i < message.Header.TotalLength; ++i)
+                            {
+                                buffer[i] = dataQ.Dequeue();
+                            }
+
+                            Message m = Message.ParseByte(buffer);
+
+                            Console.WriteLine("Server: " + m.Payload.Text);
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
         }
     }
