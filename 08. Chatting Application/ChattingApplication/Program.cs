@@ -65,7 +65,7 @@ namespace ChattingApplication
                     }
                 }
                 else if (input.Length > 0)
-                {
+                {   
                     if (input.Equals("check"))
                     {
                         Console.WriteLine(dataQ.Count);
@@ -190,8 +190,8 @@ namespace ChattingApplication
                             }
                         }
 
-                        int temp = 0;
-                        while (!(dataQ.Count < message.Header.TotalLength - Message.HEADERLENGTH))
+                        // 데이터큐 대기
+                        while (true)
                         {
                             lock (cs)
                             {
@@ -199,12 +199,6 @@ namespace ChattingApplication
                                 {
                                     break;
                                 }
-                            }
-                            await Task.Delay(10); // 10ms 대기
-                            ++temp;
-                            if (temp > 10)
-                            {
-                                break;
                             }
                         }
 
