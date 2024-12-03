@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Data;
@@ -230,7 +231,7 @@ namespace ChattingServer
                             }
                             await Task.Delay(10); // 10ms 대기
                             ++temp;
-                            if(temp > 10)
+                            if (temp > 10)
                             {
                                 break;
                             }
@@ -277,4 +278,3 @@ namespace ChattingServer
         }
     }
 }
-

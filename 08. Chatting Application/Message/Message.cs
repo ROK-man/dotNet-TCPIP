@@ -29,7 +29,7 @@ namespace Data
 
         public byte[] ToBytes()
         {
-            if(Payload == null)
+            if (Payload == null)
             {
                 Payload.Text = "NULL";
             }
