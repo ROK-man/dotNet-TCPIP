@@ -56,8 +56,7 @@ namespace ChattingApplication
                 {
                     for (int i = 0; i < 100; ++i)
                     {
-
-                        Message message = new(Message.TEXT, ID, "ㅋㅋㅋzzz");
+                        Message message = new(Message.TEXT, ID, $"Test message {i}");
                         lock (cs)
                         {
                             messageQ.Enqueue(message);
@@ -65,7 +64,7 @@ namespace ChattingApplication
                     }
                 }
                 else if (input.Length > 0)
-                {   
+                {
                     if (input.Equals("check"))
                     {
                         Console.WriteLine(dataQ.Count);
@@ -91,9 +90,8 @@ namespace ChattingApplication
                     {
                         message = messageQ.Dequeue();
                     }
-
                     await client.SendAsync(message.ToBytes());
-
+                    Console.WriteLine("Sended");
                 }
             }
 
@@ -125,6 +123,7 @@ namespace ChattingApplication
                                 dataQ.Enqueue(buffer[i]);
                             }
                         }
+                        Console.WriteLine($"Received {receiveBytes} bytes");
                     }
                 }
                 catch (SocketException ex)

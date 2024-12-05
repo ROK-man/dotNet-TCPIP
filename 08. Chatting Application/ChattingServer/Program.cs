@@ -169,6 +169,7 @@ namespace ChattingServer
                             dataQ.Enqueue(e.Buffer[i]);
                         }
                     }
+                    Console.WriteLine($"{e.BytesTransferred} received");
                     StartReceive(client);
                 }
             }
