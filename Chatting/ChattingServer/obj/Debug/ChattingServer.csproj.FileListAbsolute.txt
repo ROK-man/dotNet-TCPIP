@@ -1,0 +1,7 @@
+C:\Users\ROKman\Documents\Chatting\ChattingServer\bin\Debug\ChattingServer.exe.config
+C:\Users\ROKman\Documents\Chatting\ChattingServer\bin\Debug\ChattingServer.exe
+C:\Users\ROKman\Documents\Chatting\ChattingServer\bin\Debug\ChattingServer.pdb
+C:\Users\ROKman\Documents\Chatting\ChattingServer\obj\Debug\ChattingServer.csproj.AssemblyReference.cache
+C:\Users\ROKman\Documents\Chatting\ChattingServer\obj\Debug\ChattingServer.csproj.CoreCompileInputs.cache
+C:\Users\ROKman\Documents\Chatting\ChattingServer\obj\Debug\ChattingServer.exe
+C:\Users\ROKman\Documents\Chatting\ChattingServer\obj\Debug\ChattingServer.pdb

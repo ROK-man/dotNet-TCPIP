@@ -1,0 +1,8 @@
+C:\Users\ROKman\Documents\Chatting\ChattingClient\bin\Debug\ChattingClient.exe.config
+C:\Users\ROKman\Documents\Chatting\ChattingClient\bin\Debug\ChattingClient.exe
+C:\Users\ROKman\Documents\Chatting\ChattingClient\bin\Debug\ChattingClient.pdb
+C:\Users\ROKman\Documents\Chatting\ChattingClient\obj\Debug\ChattingClient.csproj.AssemblyReference.cache
+C:\Users\ROKman\Documents\Chatting\ChattingClient\obj\Debug\ChattingClient.csproj.CoreCompileInputs.cache
+C:\Users\ROKman\Documents\Chatting\ChattingClient\obj\Debug\ChattingClient.exe
+C:\Users\ROKman\Documents\Chatting\ChattingClient\obj\Debug\ChattingClient.pdb
+C:\Users\ROKman\Documents\Chatting\ChattingClient\obj\Debug\ChattingClient.exe.config
